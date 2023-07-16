@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-mongoose.connect('mongodb+srv://anish123:anish@cluster0.wrim3.mongodb.net/notebook');
+require("dotenv").config();
+const URI = process.env.MONGOURI;
+mongoose.connect(URI);
 
 app.use(express.json());//this is a middleware to use req.body 
 
