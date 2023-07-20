@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+i { 
+  cursor: pointer;
+}
+.modal{
+  display: block;
+}
+.backgroundColorBlur{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.8;
+}
+.alert{
+  position:absolute;
+  width: 100%;
+}

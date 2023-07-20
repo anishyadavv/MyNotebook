@@ -7,11 +7,11 @@ var fetchuser = require('../middleware/fecthuser');
 
 const JWT_SECRET = 'ALPHA';
 router.post('/createUser', async (req,res)=>{
-
+    let success = false;
     try{
         let user = await User.findOne({email: req.body.email});
         if(user){
-            return res.status(400).json({error:"sorry user exists already!!!"})
+            return res.status(400).json({success,error:"sorry user exists already!!!"})
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -28,7 +28,8 @@ router.post('/createUser', async (req,res)=>{
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET);
-        res.json({authtoken});
+        success = true;
+        res.json({success, authtoken});
     }
     catch(error){
         console.log(error.message);
@@ -39,17 +40,17 @@ router.post('/createUser', async (req,res)=>{
 //Authenticate login
 
 router.post('/login', async (req,res)=>{
-    const {email, password} = req.body;
-
+    const {email, password} = req.body; 
+    let success = false;
     try{
         const user = await User.findOne({email});
         if(!user){
-            return res.json("Please enter valid credintials");
+            return res.json({success,error:"Please enter valid credintials"});
         }
         
         const passwordCompare = await bcrypt.compare(password, user.password);
         if(!passwordCompare){
-            return res.json("Please enter valid credintials");
+            return res.json({success,error: "Please enter valid credintials"});
         }
 
         const data = {
@@ -58,7 +59,8 @@ router.post('/login', async (req,res)=>{
             }
           }
         const authtoken = jwt.sign(data, JWT_SECRET);
-        res.json({authtoken});
+        success = true;
+        res.json({success, authtoken});
     }
     catch(error){
         console.log(error.message);
@@ -71,7 +73,7 @@ router.post('/login', async (req,res)=>{
 router.post('/getuser', fetchuser,  async (req, res) => {
 
     try {
-      userId = req.user.id;
+      const userId = req.user.id;
       const user = await User.findById(userId).select("-password")
       res.send(user)
     } catch (error) {

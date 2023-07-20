@@ -29,7 +29,7 @@ router.post("/addNotes", fetchuser, async (req, res) => {
     res.json(saveNotes);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send("some error occured");
+    res.status(500).json("some error occured");
   }
 });
 

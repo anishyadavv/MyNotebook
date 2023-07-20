@@ -1,70 +1,124 @@
+import React, { useState } from "react";
+import NoteContext from "./noteContext";
 
-import React ,{ useState } from 'react';
-import NoteContext from './noteContext';
+const NoteState = (props) => {
+  const noteinitial = [];
+  const [notes, setNotes] = useState(noteinitial);
+  const [note, setNote] = useState({ title: "", description: "", tag: "" });
+  const [noteedit, setEditNote] = useState({
+    etitle: "",
+    edescription: "",
+    etag: "",
+  });
+  const [refresh, setRefresh] = useState(false);
+  const [editNoteid, setEditNoteid] = useState();
+  const [showpopup, setpopup] = useState(false);
+  const [alert, setAlert] = useState("");
+  const host = "https://mynotebookbackend-0n7e.onrender.com";
 
-const NoteState = (props)=>{
-    const noteinitial =[
-        {
-          "_id": "64b0346c94eb9a9849ee2a2f",
-          "user": "64b0273a1cdff13f8cbbbc50",
-          "title": "my title",
-          "description": "please drink milk at night",
-          "tag": "personal",
-          "date": "2023-07-13T17:29:16.248Z",
-          "__v": 0
-        },
-        {
-          "_id": "64b3929cd8296ffb9596fefe",
-          "user": "64b0273a1cdff13f8cbbbc50",
-          "title": "hello",
-          "description": "please help me",
-          "tag": "personal",
-          "date": "2023-07-16T06:47:56.939Z",
-          "__v": 0
-        },
-        {
-          "_id": "64b392b4d8296ffb9596ff00",
-          "user": "64b0273a1cdff13f8cbbbc50",
-          "title": "Pernal notes",
-          "description": "spelling of personal is wrong",
-          "tag": "personal",
-          "date": "2023-07-16T06:48:20.909Z",
-          "__v": 0
-        },{
-            "_id": "64b0346c94eb9a9849ee2a2f",
-            "user": "64b0273a1cdff13f8cbbbc50",
-            "title": "my title",
-            "description": "please drink milk at night",
-            "tag": "personal",
-            "date": "2023-07-13T17:29:16.248Z",
-            "__v": 0
-          },
-          {
-            "_id": "64b3929cd8296ffb9596fefe",
-            "user": "64b0273a1cdff13f8cbbbc50",
-            "title": "hello",
-            "description": "please help me",
-            "tag": "personal",
-            "date": "2023-07-16T06:47:56.939Z",
-            "__v": 0
-          },
-          {
-            "_id": "64b392b4d8296ffb9596ff00",
-            "user": "64b0273a1cdff13f8cbbbc50",
-            "title": "Pernal notes",
-            "description": "spelling of personal is wrong",
-            "tag": "personal",
-            "date": "2023-07-16T06:48:20.909Z",
-            "__v": 0
-          }
-      ]
+  //show alert
+  const showAlert = (message) => {
+    setAlert(message);
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500);
+  };
 
-    const [notes,setNotes] = useState(noteinitial);
-    return (
-        <NoteContext.Provider value={{notes, setNotes}}>
-            {props.children}
-        </NoteContext.Provider>
-    )
+  //fetch notes
+  const getNotes = async () => {
+    const response = await fetch(`${host}/api/notes/fetchAllnotes`, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token": localStorage.getItem('token')
+      },
+    });
+    const json = await response.json();
+
+    setNotes(json);
+  };
+
+  // add a note
+  const addNote = async ({ title, description, tag }) => {
+    const response = await fetch(`${host}/api/notes/addNotes`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token": localStorage.getItem('token')
+      },
+      body: JSON.stringify({ title, description, tag }),
+    });
+    const json = await response.json();
+    refresh ? setRefresh(false) : setRefresh(true);
+    
+    showAlert("Note is Added");
+
+  };
+  //delete a note
+  const deleteNote = async (id) => {
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token": localStorage.getItem('token')
+      },
+    });
+    refresh ? setRefresh(false) : setRefresh(true);
+    showAlert("Note Deleted");
+  };
+
+  // edit a note
+  const editNote = async (id) => {
+    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token": localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        title: noteedit.etitle,
+        description: noteedit.edescription,
+        tag: noteedit.etag,
+      }),
+    });
+
+    refresh ? setRefresh(false) : setRefresh(true);
+    showAlert("Note Updated");
+  };
+  return (
+    <NoteContext.Provider
+      value={{
+        notes,
+        setNotes,
+        addNote,
+        deleteNote,
+        editNote,
+        getNotes,
+        showpopup,
+        setpopup,
+        note,
+        setNote,
+        noteedit,
+        setEditNote,
+        editNoteid,
+        setEditNoteid,
+        refresh,
+        alert, 
+        setAlert,
+        showAlert
+      }}
+    >
+      {props.children}
+    </NoteContext.Provider>
+  );
 };
 
 export default NoteState;
