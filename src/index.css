@@ -25,6 +25,36 @@ i {
   opacity: 0.8;
 }
 .alert{
-  position:absolute;
-  width: 100%;
+  position:fixed;
+  z-index: 2;
+  margin: auto;
+  width: 85vw;
+}
+.spinner{
+  position: fixed;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.popup{
+  display: none;
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: auto;
+  height: auto;
+  padding: 10px;
+  border: 1px solid #3a3a3a;
+  background-color: white;
+  border-radius: 5px;
+}
+.card{
+  margin: auto;
+  max-height: 200px;
+}
+.notes{
+margin-top: 10vh;
 }

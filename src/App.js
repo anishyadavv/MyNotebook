@@ -9,15 +9,17 @@ import Signup from './components/Signup';
 
 import Alert from './components/Alert';
 import noteContext from './context/notes/noteContext';
+import Spinner from './components/Spinner';
 function App() {
   const context = useContext(noteContext);
-  const {alert,showAlert} = context;
+  const {alert,showAlert, loading} = context;
   return (
     <>
       
       <Router>
       <Navbar/>
       <div className="container">
+        {loading && <Spinner/>}
       {alert && <Alert message={alert} showAlert={showAlert}/>}
         <Routes>
           <Route path='/' element={<Home/>} />

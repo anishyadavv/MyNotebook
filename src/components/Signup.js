@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import noteContext from '../context/notes/noteContext';
+
 
 const Signup = () => {
     let navigate = useNavigate();
+    const context = useContext(noteContext);
+    const {setLoading} = context;
     const handleSubmit = async(e)=>{
         e.preventDefault();
+        setLoading(true);
         const name = e.target[0].value;
         const email = e.target[1].value;
         const password = e.target[2].value;
@@ -24,6 +29,7 @@ const Signup = () => {
         });
         const json = await response.json();
         console.log(json);
+        setLoading(false);
         if(json.success){
             localStorage.setItem('token',json.authtoken);
             navigate('/');
@@ -33,9 +39,10 @@ const Signup = () => {
         }
     }
   return (
-    <div>
+    <div className="signup">
       <form className="m-5" onSubmit={handleSubmit}>
-      <div className="mb-3">
+        <h2 className="mb-4">Sign up</h2>
+        <div>
           <label htmlFor="exampleInputEmail1" className="form-label">
             Name
           </label>
@@ -43,9 +50,10 @@ const Signup = () => {
             type="text"
             className="form-control"
             aria-describedby="emailHelp"
+            placeholder='Enter Name'
           />
         </div>
-        <div className="mb-3">
+        <div className="mt-2">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
           </label>
@@ -53,23 +61,22 @@ const Signup = () => {
             type="email"
             className="form-control"
             aria-describedby="emailHelp"
+            required
+            placeholder='Enter Email'
           />
         </div>
-        <div className="mb-3">
+        <div className="mt-2 mb-4">
           <label htmlFor="exampleInputPassword1" className="form-label">
             Password
           </label>
-          <input
-            type="password"
-            className="form-control"
-          />
+          <input type="password" className="form-control" required  placeholder='Enter Password'/>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary btn-form">
           Signup
         </button>
       </form>
     </div>
-  )
+  );
 }
 
 export default Signup
