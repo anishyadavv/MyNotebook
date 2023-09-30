@@ -1,4 +1,6 @@
-
+.navbar{
+  z-index: 10;
+}
 .login{
   max-width: 350px;
   width: 100%;
@@ -82,4 +84,7 @@ body{
   border: none;
   outline: none;
   font-size: 1rem;
+}
+.eye{
+  margin-left: -28px;
 }
