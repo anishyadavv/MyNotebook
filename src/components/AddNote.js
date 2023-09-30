@@ -51,6 +51,7 @@ const AddNote = () => {
               name="description"
               value={note.description}
               onChange={handleChange}
+              rows={4}
             />
           </div>
           <div className="mb-3">

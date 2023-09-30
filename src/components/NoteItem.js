@@ -45,10 +45,14 @@ const NoteItem = (props) => {
                   className="fa-sharp fa-solid fa-file-pen mx-2"
                   onClick={() => editNote(note._id)}
                 ></i>
-                <i class="fa-solid fa-expand" onClick={handleClick}></i>
+                <i className="fa-solid fa-expand" onClick={handleClick}></i>
               </div>
             </div>
-            <p className="card-text">{(note.description.length>120)?note.description.slice(0,120)+"....":note.description}</p>
+            <p className="card-text">
+              {note.description.length > 120
+                ? note.description.slice(0, 120) + "...."
+                : note.description}
+            </p>
             <p>
               <b>{note.tag}</b>
             </p>
@@ -56,21 +60,23 @@ const NoteItem = (props) => {
         </div>
       </div>
       <div className="popup shadow">
-        <p>Are you sure?</p>
-        <button
-          type="button"
-          className="btn btn-secondary mx-2"
-          onClick={closepopup}
-        >
-          NO
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary mx-2"
-          onClick={handleYes}
-        >
-          Yes
-        </button>
+        <p className="text-center">Are you sure?</p>
+        <div className="d-flex justify-content-around">
+          <button
+            type="button"
+            className="btn btn-secondary mx-2"
+            onClick={closepopup}
+          >
+            NO
+          </button>
+          <button
+            type="button"
+            className="btn btn-dark mx-2"
+            onClick={handleYes}
+          >
+            Yes
+          </button>
+        </div>
       </div>
     </>
   );

@@ -44,12 +44,15 @@ i {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: auto;
+  width: 300px;
   height: auto;
   padding: 10px;
   border: 1px solid #3a3a3a;
   background-color: white;
   border-radius: 5px;
+}
+.popup button{
+  width: 40%;
 }
 .card{
   margin: auto;

@@ -17,7 +17,7 @@ const Navbar = () => {
  
   return (
     <div>
-            <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
+        <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
         <div className="container-fluid">
             <Link className="navbar-brand" to="/">My Notebook</Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

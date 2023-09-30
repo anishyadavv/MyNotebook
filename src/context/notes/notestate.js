@@ -31,7 +31,7 @@ const NoteState = (props) => {
 
   //fetch notes
   const getNotes = async () => {
-    // setLoading(true);
+    setLoading(true);
     const response = await fetch(`${host}/api/notes/fetchAllnotes`, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -42,7 +42,7 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    // setLoading(false);
+    setLoading(false);
     setNotes(json);
   };
 
