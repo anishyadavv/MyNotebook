@@ -3,7 +3,8 @@ import noteContext from "../context/notes/noteContext";
 
 const AddNote = () => {
     const context = useContext(noteContext);
-    const {addNote,note,setNote,setAddnote} = context;
+    const { addNote, note, setNote, setAddnote,setProgress } =
+      context;
 
   
     const handleChange=(e)=>{
@@ -16,8 +17,10 @@ const AddNote = () => {
 
     const handleClick =(e)=>{
         e.preventDefault();
+        setProgress(10);
         addNote(note);
         setNote({title:"",description:"",tag:""});
+        setProgress(100);
         setAddnote(false);
     }
   return (

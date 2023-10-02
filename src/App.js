@@ -10,26 +10,31 @@ import Signup from './components/Signup';
 import Alert from './components/Alert';
 import noteContext from './context/notes/noteContext';
 import Spinner from './components/Spinner';
+import LoadingBar from "react-top-loading-bar";
 function App() {
   const context = useContext(noteContext);
-  const {alert,showAlert, loading} = context;
+  const { alert, showAlert, loading, progress, setProgress } = context;
   return (
     <>
-      
       <Router>
-      <Navbar/>
-      <div className="container">
-        {loading && <Spinner/>}
-      {alert && <Alert message={alert} showAlert={showAlert}/>}
-        <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/about' element={<About/>} />
-          <Route path='/login' element={<Login/>} />
-          <Route path='/signup' element={<Signup/>} />
-        </Routes>
+        <LoadingBar
+          color="#f11946"
+          progress={progress}
+          height={5}
+          onLoaderFinished={() => setProgress(0)}
+        />
+        <Navbar />
+        <div className="container">
+          {loading && <Spinner />}
+          {alert && <Alert message={alert} showAlert={showAlert} />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
         </div>
       </Router>
-      
     </>
   );
 }

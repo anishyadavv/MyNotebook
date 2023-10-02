@@ -3,7 +3,7 @@ import noteContext from "../context/notes/noteContext";
 
 const EditNote = () => {
     const context = useContext(noteContext);
-    const {setpopup,editNote,setEditNote,noteedit,editNoteid} = context;
+    const {setpopup,editNote,setEditNote,noteedit,editNoteid,setProgress} = context;
     
     
     const closepopup =()=>{
@@ -16,8 +16,10 @@ const EditNote = () => {
 
     const handleClick =(e)=>{
         e.preventDefault();
+        setProgress(0);
         editNote(editNoteid);
         setpopup(false);
+        setProgress(100);
         
     }
   return (

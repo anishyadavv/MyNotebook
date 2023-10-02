@@ -15,11 +15,11 @@ const NoteState = (props) => {
     edescription: "",
     etag: "",
   });
-  const [refresh, setRefresh] = useState(false);
   const [editNoteid, setEditNoteid] = useState();
   const [showpopup, setpopup] = useState(false);
   const [showAddnote, setAddnote] = useState(false);
   const [alert, setAlert] = useState("");
+  const [progress, setProgress] = useState(0);
   const host = "https://mynotebookbackend-0n7e.onrender.com";
 
   //show alert
@@ -32,7 +32,7 @@ const NoteState = (props) => {
 
   //fetch notes
   const getNotes = async () => {
-    setLoading(true);
+    setProgress(0);
     const response = await fetch(`${host}/api/notes/fetchAllnotes`, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -43,13 +43,12 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    setLoading(false);
+    setProgress(100);
     setNotes(json);
   };
 
   // add a note
   const addNote = async ({ title, description, tag }) => {
-    setLoading(true);
     const response = await fetch(`${host}/api/notes/addNotes`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -62,13 +61,11 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     setNotes(notes.concat(json));
-    refresh ? setRefresh(false) : setRefresh(true);
-    setLoading(false);
+
     showAlert("Note is Added");
   };
   //delete a note
   const deleteNote = async (id) => {
-    setLoading(true);
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -88,14 +85,12 @@ const NoteState = (props) => {
     setFilterednotes(filteredNotes);
     setNotes(newNotes);
 
-    refresh ? setRefresh(false) : setRefresh(true);
-    setLoading(false);
     showAlert("Note Deleted");
   };
 
   // edit a note
   const editNote = async (id) => {
-    setLoading(true);
+    setProgress(0);
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -134,8 +129,7 @@ for (let index = 0; index < filterednotes.length; index++) {
 }
 
 setNotes(newNotes);
-    // refresh ? setRefresh(false) : setRefresh(true);
-    setLoading(false);
+    setProgress(100);
     showAlert("Note Updated");
   };
   // get userdata
@@ -169,7 +163,6 @@ setNotes(newNotes);
         setEditNote,
         editNoteid,
         setEditNoteid,
-        refresh,
         alert,
         setAlert,
         showAlert,
@@ -186,6 +179,8 @@ setNotes(newNotes);
         setShowNotes,
         filterednotes,
         setFilterednotes,
+        progress,
+        setProgress,
       }}
     >
       {props.children}

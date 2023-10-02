@@ -15,7 +15,6 @@ const Notes = () => {
     setpopup,
     setEditNote,
     setEditNoteid,
-    refresh,
     getUserData,
     showAddnote,
     setAddnote,
@@ -57,7 +56,7 @@ const Notes = () => {
     } else {
       navigate("/login");
     }
-  }, [refresh]);
+  }, []);
   return (
     <div className="notes">
       {/* <Alert message="hello" showAlert="hello" /> */}

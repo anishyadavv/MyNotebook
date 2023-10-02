@@ -4,7 +4,7 @@ import NoteData from "./NoteData";
 
 const NoteItem = (props) => {
   const context = useContext(noteContext);
-  const { deleteNote,deleteId,setDeleteId} = context;
+  const { deleteNote, deleteId, setDeleteId,setProgress } = context;
   const [showNotes,setShowNotes] = useState(false);
   const { note, editNote } = props;
   const showpopup=(id)=>{
@@ -16,7 +16,9 @@ const NoteItem = (props) => {
   }
   const handleYes =(e)=>{
     document.querySelector('.popup').style.display = 'none';
+    setProgress(0);
     deleteNote(deleteId);
+    setProgress(100);
   }
   const handleClick =()=>{
     setShowNotes(true);
