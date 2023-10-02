@@ -88,3 +88,24 @@ body{
 .eye{
   margin-left: -28px;
 }
+.warning{
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  width: 250px;
+  height: 250px;
+  background-color: #FFF;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.message{
+  width: 100%;
+  height: 100%;
+  display: inline;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}

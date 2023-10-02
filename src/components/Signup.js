@@ -55,7 +55,7 @@ const Signup = () => {
     <div className="signup">
       <form className="m-5" onSubmit={handleSubmit}>
         <h2 className="mb-4">Sign up</h2>
-        <p>{error}</p>
+        <p style={{color: "red"}}>{error}</p>
         <div>
           <label htmlFor="exampleInputEmail1" className="form-label">
             Name

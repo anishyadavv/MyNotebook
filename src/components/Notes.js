@@ -4,6 +4,7 @@ import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 import EditNote from "./EditNote";
 import { useNavigate } from "react-router-dom";
+import Alert from "./Alert";
 const Notes = () => {
   const navigate = useNavigate();
   const context = useContext(noteContext);
@@ -18,8 +19,9 @@ const Notes = () => {
     getUserData,
     showAddnote,
     setAddnote,
+    filterednotes,
+    setFilterednotes,
   } = context;
-  const [filterednotes, setFilterednotes] = useState([]);
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {
     setpopup(true);
@@ -39,7 +41,11 @@ const Notes = () => {
       let title = note.title.toLowerCase();
       let description = note.description.toLowerCase();
       let tag = note.tag.toLowerCase();
-      return title.includes(searchValue) || description.includes(searchValue)|| tag.includes(searchValue);
+      return (
+        title.includes(searchValue) ||
+        description.includes(searchValue) ||
+        tag.includes(searchValue)
+      );
     });
     setFilterednotes(newNotes);
     setSearch(searchValue);
@@ -54,6 +60,7 @@ const Notes = () => {
   }, [refresh]);
   return (
     <div className="notes">
+      {/* <Alert message="hello" showAlert="hello" /> */}
       <div className="container d-md-flex justify-content-between align-items-center mb-4">
         <button className="btn btn-dark mt-4" onClick={handleAddnote}>
           Add Note
@@ -93,6 +100,8 @@ const Notes = () => {
                   />
                 );
               })
+            ) : filterednotes.length === 0 ? (
+              <h1 className="text-center">Note Not Found!</h1>
             ) : (
               filterednotes.map((e) => {
                 return (
@@ -105,7 +114,7 @@ const Notes = () => {
               })
             )
           ) : (
-            <h1 className="text-center">No Notes to display</h1>
+            <h1 className="text-center">No Notes To Display</h1>
           )}
         </div>
       </div>

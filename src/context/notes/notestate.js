@@ -4,6 +4,7 @@ import NoteContext from "./noteContext";
 const NoteState = (props) => {
   const noteinitial = [];
   const [notes, setNotes] = useState(noteinitial);
+  const [filterednotes, setFilterednotes] = useState([]);
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const [loading, setLoading] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
@@ -26,7 +27,7 @@ const NoteState = (props) => {
     setAlert(message);
     setTimeout(() => {
       setAlert(null);
-    }, 1500);
+    }, 1200);
   };
 
   //fetch notes
@@ -81,6 +82,10 @@ const NoteState = (props) => {
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
+    const filteredNotes = filterednotes.filter((note) => {
+      return note._id !== id;
+    });
+    setFilterednotes(filteredNotes);
     setNotes(newNotes);
 
     refresh ? setRefresh(false) : setRefresh(true);
@@ -118,8 +123,18 @@ for (let index = 0; index < newNotes.length; index++) {
     break;
   }
 }
+for (let index = 0; index < filterednotes.length; index++) {
+  const element = filterednotes[index];
+  if (element._id === id) {
+    element.title = noteedit.etitle;
+    element.description = noteedit.edescription;
+    element.tag = noteedit.etag;
+    break;
+  }
+}
+
 setNotes(newNotes);
-    refresh ? setRefresh(false) : setRefresh(true);
+    // refresh ? setRefresh(false) : setRefresh(true);
     setLoading(false);
     showAlert("Note Updated");
   };
@@ -169,6 +184,8 @@ setNotes(newNotes);
         setAddnote,
         showNotes,
         setShowNotes,
+        filterednotes,
+        setFilterednotes,
       }}
     >
       {props.children}
