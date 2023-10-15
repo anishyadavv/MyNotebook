@@ -14,10 +14,10 @@ const NoteItem = (props) => {
   const closepopup=()=>{
     document.querySelector('.popup').style.display = 'none';
   }
-  const handleYes =(e)=>{
+  const handleYes =async(e)=>{
     document.querySelector('.popup').style.display = 'none';
-    setProgress(0);
-    deleteNote(deleteId);
+    setProgress(70);
+    await deleteNote(deleteId);
     setProgress(100);
   }
   const handleClick =()=>{

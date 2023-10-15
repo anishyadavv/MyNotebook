@@ -14,10 +14,10 @@ const EditNote = () => {
         setEditNote({...noteedit,[e.target.name]:e.target.value})
     }
 
-    const handleClick =(e)=>{
+    const handleClick =async(e)=>{
         e.preventDefault();
-        setProgress(0);
-        editNote(editNoteid);
+        setProgress(70);
+        await editNote(editNoteid);
         setpopup(false);
         setProgress(100);
         

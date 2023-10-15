@@ -15,10 +15,10 @@ const AddNote = () => {
       setAddnote(false);
     }
 
-    const handleClick =(e)=>{
+    const handleClick =async(e)=>{
         e.preventDefault();
-        setProgress(10);
-        addNote(note);
+        setProgress(70);
+        await addNote(note);
         setNote({title:"",description:"",tag:""});
         setProgress(100);
         setAddnote(false);

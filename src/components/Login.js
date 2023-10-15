@@ -7,7 +7,7 @@ const Login = () => {
     let navigate = useNavigate();
     const context = useContext(noteContext);
     const [error, setError] = useState("");
-    const {setLoading} = context;
+    const {setProgress} = context;
     const [type, setType] = useState("password");
     const handlePass = (e) => {
       if (type === "password") {
@@ -22,7 +22,8 @@ const Login = () => {
     };
     const handleSubmit = async(e)=>{
         e.preventDefault();
-        setLoading(true);
+        // setLoading(true);
+        setProgress(90);
        const email = e.target[0].value;
        const password = e.target[1].value;
        const response = await fetch(`https://mynotebookbackend-0n7e.onrender.com/api/auth/login`, {
@@ -39,7 +40,8 @@ const Login = () => {
         });
         const json = await response.json();
         console.log(json);
-        setLoading(false);
+        // setLoading(false);
+        setProgress(100);
         if(json.success){
             localStorage.setItem('token', json.authtoken);
             navigate('/');

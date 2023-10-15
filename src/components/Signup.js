@@ -6,7 +6,7 @@ const Signup = () => {
   let navigate = useNavigate();
   const [error, setError] = useState("");
   const context = useContext(noteContext);
-  const { setLoading } = context;
+  const { setProgress} = context;
    const [type, setType] = useState("password");
    const handlePass = (e) => {
      if (type === "password") {
@@ -21,7 +21,7 @@ const Signup = () => {
    };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+   setProgress(90);
     const name = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
@@ -43,7 +43,7 @@ const Signup = () => {
     );
     const json = await response.json();
     console.log(json);
-    setLoading(false);
+    setProgress(100);
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       navigate("/");

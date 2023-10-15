@@ -6,7 +6,6 @@ import Home from './components/Home';
 import About from './components/About';
 import Login from './components/Login';
 import Signup from './components/Signup';
-
 import Alert from './components/Alert';
 import noteContext from './context/notes/noteContext';
 import Spinner from './components/Spinner';

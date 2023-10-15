@@ -4,7 +4,6 @@ import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 import EditNote from "./EditNote";
 import { useNavigate } from "react-router-dom";
-import Alert from "./Alert";
 const Notes = () => {
   const navigate = useNavigate();
   const context = useContext(noteContext);
@@ -20,6 +19,7 @@ const Notes = () => {
     setAddnote,
     filterednotes,
     setFilterednotes,
+    setProgress
   } = context;
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {

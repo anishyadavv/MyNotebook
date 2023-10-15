@@ -32,7 +32,7 @@ const NoteState = (props) => {
 
   //fetch notes
   const getNotes = async () => {
-    setProgress(0);
+    setProgress(90);
     const response = await fetch(`${host}/api/notes/fetchAllnotes`, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -43,8 +43,8 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    setProgress(100);
     setNotes(json);
+    setProgress(100);
   };
 
   // add a note
@@ -105,30 +105,30 @@ const NoteState = (props) => {
         tag: noteedit.etag,
       }),
     });
-const json = await response.json();
+    const json = await response.json();
 
-let newNotes = JSON.parse(JSON.stringify(notes));
-// Logic to edit in client
-for (let index = 0; index < newNotes.length; index++) {
-  const element = newNotes[index];
-  if (element._id === id) {
-    newNotes[index].title = noteedit.etitle;
-    newNotes[index].description = noteedit.edescription;
-    newNotes[index].tag = noteedit.etag;
-    break;
-  }
-}
-for (let index = 0; index < filterednotes.length; index++) {
-  const element = filterednotes[index];
-  if (element._id === id) {
-    element.title = noteedit.etitle;
-    element.description = noteedit.edescription;
-    element.tag = noteedit.etag;
-    break;
-  }
-}
+    let newNotes = JSON.parse(JSON.stringify(notes));
+    // Logic to edit in client
+    for (let index = 0; index < newNotes.length; index++) {
+      const element = newNotes[index];
+      if (element._id === id) {
+        newNotes[index].title = noteedit.etitle;
+        newNotes[index].description = noteedit.edescription;
+        newNotes[index].tag = noteedit.etag;
+        break;
+      }
+    }
+    for (let index = 0; index < filterednotes.length; index++) {
+      const element = filterednotes[index];
+      if (element._id === id) {
+        element.title = noteedit.etitle;
+        element.description = noteedit.edescription;
+        element.tag = noteedit.etag;
+        break;
+      }
+    }
 
-setNotes(newNotes);
+    setNotes(newNotes);
     setProgress(100);
     showAlert("Note Updated");
   };
