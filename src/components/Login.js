@@ -6,6 +6,9 @@ import noteContext from "../context/notes/noteContext";
 const Login = () => {
     let navigate = useNavigate();
     const context = useContext(noteContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     const [error, setError] = useState("");
     const {setProgress} = context;
     const [type, setType] = useState("password");
@@ -20,12 +23,16 @@ const Login = () => {
         e.target.classList.remove("fa-eye");
       }
     };
+    const handleguest = async(e)=>{
+      e.preventDefault();
+      setEmail("panda@gmail.com");
+      setPassword("panda");  
+    }
     const handleSubmit = async(e)=>{
         e.preventDefault();
         // setLoading(true);
         setProgress(90);
-       const email = e.target[0].value;
-       const password = e.target[1].value;
+
        const response = await fetch(`https://mynotebookbackend-0n7e.onrender.com/api/auth/login`, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
@@ -64,6 +71,8 @@ const Login = () => {
           </label>
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
@@ -77,6 +86,8 @@ const Login = () => {
           <div className="d-flex">
             <input
               type={type}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="form-control"
               required
               placeholder="Enter Password"
@@ -92,6 +103,7 @@ const Login = () => {
         <button type="submit" className="btn btn-primary btn-form mt-2">
           Login
         </button>
+        <button onClick={handleguest} className="btn btn-danger btn-form mt-2">Get Guest Credentials</button>
         <p className="text-center mt-1">
           Don't have an account? <Link to="/signup">Signup</Link>
         </p>
