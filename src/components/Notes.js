@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Suspense, lazy, useContext, useEffect, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
-import AddNote from "./AddNote";
-import EditNote from "./EditNote";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
+const EditNote = lazy(() => import("./EditNote"));
+const AddNote = lazy(() => import("./AddNote"));
 const Notes = () => {
   const navigate = useNavigate();
   const context = useContext(noteContext);
@@ -19,7 +20,6 @@ const Notes = () => {
     setAddnote,
     filterednotes,
     setFilterednotes,
-    setProgress
   } = context;
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {
@@ -81,9 +81,9 @@ const Notes = () => {
           />
         </div>
       </div>
+      <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense>
+      <Suspense fallback={<Spinner/>}>{showpopup && <EditNote />}</Suspense>
 
-      {showAddnote && <AddNote />}
-      {showpopup && <EditNote />}
       <div className="container">
         <div className="row my-3">
           <h2 className="mb-4">Your Notes</h2>
