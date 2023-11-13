@@ -20,7 +20,7 @@ const NoteState = (props) => {
   const [showAddnote, setAddnote] = useState(false);
   const [alert, setAlert] = useState("");
   const [progress, setProgress] = useState(0);
-  const host = "https://mynotebookbackend-0n7e.onrender.com";
+  const host = "http://localhost:5000";
 
   //show alert
   const showAlert = (message) => {

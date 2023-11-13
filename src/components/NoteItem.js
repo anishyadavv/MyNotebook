@@ -23,6 +23,22 @@ const NoteItem = (props) => {
   const handleClick =()=>{
     setShowNotes(true);
   }
+  const date = new Date(note.date);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let month = months[date.getMonth()];
   return (
     <>
       {showNotes && (
@@ -37,7 +53,7 @@ const NoteItem = (props) => {
         <div className="card mb-4" style={{ width: "18rem" }}>
           <div className="card-body">
             <div className="d-flex align-items-center justify-content-between">
-              <h5 className="card-title">{note.title}</h5>
+              <h5 className="card-title">{note.title.length>20?note.title.slice(0,20)+"...":note.title}</h5>
               <div>
                 <i
                   className="fa-solid fa-trash mx-2"
@@ -50,14 +66,15 @@ const NoteItem = (props) => {
                 <i className="fa-solid fa-expand" onClick={handleClick}></i>
               </div>
             </div>
-            <p className="card-text">
-              {note.description.length > 120
-                ? note.description.slice(0, 120) + "...."
+            <p className="card-text" style={{whiteSpace:"pre-wrap"}}>
+              {note.description.length > 90
+                ? note.description.slice(0, 90) + "...."
                 : note.description}
             </p>
-            <p>
+            <p className="card-tag">
               <b>{note.tag}</b>
             </p>
+            <p className="time">{`${date.getDate()} ${month.slice(0,3)} ${date.getFullYear()}`}</p>
           </div>
         </div>
       </div>
