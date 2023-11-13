@@ -9,12 +9,12 @@ const NoteData = (note) => {
     <>
       <div className="blurbackground" onClick={closepopup}></div>
       <div className="note-data">
-        <i
-          className="fa-solid fa-xmark fa-lg d-flex flex-row-reverse"
+        {/* <i
+          className="fa-solid fa-xmark fa-lg d-flex flex-row-reverse cross"
           onClick={closepopup}
-        ></i>
+        ></i> */}
         <h1>{note.title}</h1>
-        <p>{note.description}</p>
+        <p className="noteDescription">{note.description}</p>
         <b>{note.tag}</b>
       </div>
     </>

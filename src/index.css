@@ -56,7 +56,22 @@ i {
 }
 .card{
   margin: auto;
-  max-height: 200px;
+  height: 160px;
+  overflow: hidden;
+}
+.card-tag{
+  position: absolute;
+  bottom: -7px;
+  left: 15px;
+}
+.time{
+  position: absolute;
+  bottom: -7px;
+  right: 15px;
+  opacity: 0.5;
+}
+.noteDescription{
+  white-space: pre-wrap;
 }
 .notes{
 margin-top: 10vh;

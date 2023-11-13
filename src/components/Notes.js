@@ -56,7 +56,8 @@ const Notes = () => {
     } else {
       navigate("/login");
     }
-  }, []);
+    //eslint-disable-next-line
+  },[]);
   return (
     <div className="notes">
       {/* <Alert message="hello" showAlert="hello" /> */}
@@ -82,7 +83,7 @@ const Notes = () => {
         </div>
       </div>
       <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense>
-      <Suspense fallback={<Spinner/>}>{showpopup && <EditNote />}</Suspense>
+      <Suspense fallback={<Spinner />}>{showpopup && <EditNote />}</Suspense>
 
       <div className="container">
         <div className="row my-3">
@@ -90,27 +91,35 @@ const Notes = () => {
 
           {notes.length !== 0 ? (
             search.length === 0 ? (
-              notes.map((e) => {
-                return (
-                  <NoteItem
-                    key={e._id}
-                    editNote={() => editNote(e._id, e)}
-                    note={e}
-                  />
-                );
-              })
+              notes
+                .sort((a, b) => {
+                  return new Date(b.date) - new Date(a.date);
+                })
+                .map((e) => {
+                  return (
+                    <NoteItem
+                      key={e._id}
+                      editNote={() => editNote(e._id, e)}
+                      note={e}
+                    />
+                  );
+                })
             ) : filterednotes.length === 0 ? (
               <h1 className="text-center">Note Not Found!</h1>
             ) : (
-              filterednotes.map((e) => {
-                return (
-                  <NoteItem
-                    key={e._id}
-                    editNote={() => editNote(e._id, e)}
-                    note={e}
-                  />
-                );
-              })
+              filterednotes
+                .sort((a, b) => {
+                  return new Date(b.date) - new Date(a.date);
+                })
+                .map((e) => {
+                  return (
+                    <NoteItem
+                      key={e._id}
+                      editNote={() => editNote(e._id, e)}
+                      note={e}
+                    />
+                  );
+                })
             )
           ) : (
             <h1 className="text-center">No Notes To Display</h1>
