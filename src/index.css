@@ -11,7 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-i { 
+i {
   cursor: pointer;
 }
 .modal{
@@ -64,6 +64,11 @@ i {
   bottom: -7px;
   left: 15px;
 }
+.notedata-tag{
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+}
 .time{
   position: absolute;
   bottom: -7px;
@@ -75,4 +80,7 @@ i {
 }
 .notes{
 margin-top: 10vh;
+}
+[contenteditable]:focus {
+  outline: none;
 }
