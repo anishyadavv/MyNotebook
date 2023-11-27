@@ -22,7 +22,7 @@ const Landing = () => {
             capture, organzie, and access your ideas on the go with the help of{" "}
             <strong>My Notebook</strong> application.
           </p>
-          <Link to="/signup">
+          <Link to="/login">
             <button className="btn btn-dark btn-lg mt-4">Get Started</button>
           </Link>
         </div>
