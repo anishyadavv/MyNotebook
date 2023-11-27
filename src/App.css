@@ -109,3 +109,36 @@ body{
   justify-content: space-around;
   align-items: center;
 }
+.landing{
+  margin-top: 10vw;
+}
+
+.landing .right{
+  text-align: center;
+  position: relative;
+  left: 50px;
+}
+.landing h1{
+  font-weight: 700;
+}
+.landing p{
+  opacity: 0.8;
+}
+.noteimg{
+  width: 30vw;
+  margin: auto;
+  transform: rotate(344deg);
+}
+
+@media only screen and (max-width: 800px) {
+  .landing img{
+    display: none;
+  }
+  .landing {
+   margin-top: 25vh;
+  }
+  .landing .left{
+     text-align: center;
+  }
+
+}

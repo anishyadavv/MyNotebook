@@ -4,8 +4,7 @@ import noteContext from "../context/notes/noteContext";
 const EditNote = () => {
     const context = useContext(noteContext);
     const {setpopup,editNote,setEditNote,noteedit,editNoteid,setProgress} = context;
-    
-    
+
     const closepopup =()=>{
         setpopup(false);
     }
@@ -20,7 +19,6 @@ const EditNote = () => {
         await editNote(editNoteid);
         setpopup(false);
         setProgress(100);
-        
     }
   return (
     <div>

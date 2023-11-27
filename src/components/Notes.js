@@ -76,7 +76,7 @@ const Notes = () => {
             type="text"
             name="search"
             id="search"
-            placeholder="Search"
+            placeholder="Search Here"
             autoComplete="off"
             onChange={handleSearch}
           />
