@@ -42,6 +42,7 @@ const NoteState = (props) => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token": localStorage.getItem("token"),
       },
+      referrerPolicy: "unsafe_url",
     });
     const json = await response.json();
     setNotes(json);
@@ -59,6 +60,7 @@ const NoteState = (props) => {
         "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
+      referrerPolicy: "unsafe_url",
     });
     const json = await response.json();
     setNotes(notes.concat(json));
@@ -75,6 +77,7 @@ const NoteState = (props) => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token": localStorage.getItem("token"),
       },
+      referrerPolicy: "unsafe_url",
     });
     const json = response.json();
     const newNotes = notes.filter((note) => {
@@ -105,6 +108,7 @@ const NoteState = (props) => {
         description: noteedit.edescription,
         tag: noteedit.etag,
       }),
+      referrerPolicy: "unsafe_url",
     });
     const json = await response.json();
 
@@ -143,6 +147,7 @@ const NoteState = (props) => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token": localStorage.getItem("token"),
       },
+      referrerPolicy: "unsafe_url",
     });
     const json = await response.json();
     setUserData({ name: json.name, email: json.email });
