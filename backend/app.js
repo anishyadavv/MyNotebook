@@ -17,6 +17,8 @@ app.use("/api/notes", require("./routes/notes"));
 app.get("/", (req, res) => {
   res.send("Hello Anish");
 });
-app.listen(5000, () => {
+
+
+app.listen(PORT, () => {
   console.log("listening on port 5000");
 });

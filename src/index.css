@@ -37,6 +37,7 @@ i {
   left: 50%;
   transform: translate(-50%,-50%);
 }
+
 .popup{
   display: none;
   z-index: 1;
@@ -56,7 +57,7 @@ i {
 }
 .card{
   margin: auto;
-  height: 160px;
+  height: 175px;
   overflow: hidden;
 }
 .card-tag{
