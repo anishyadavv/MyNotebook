@@ -20,8 +20,7 @@ const NoteState = (props) => {
   const [showAddnote, setAddnote] = useState(false);
   const [alert, setAlert] = useState("");
   const [progress, setProgress] = useState(0);
-  const host =
-    "http://mynotebook-env.eba-aqhdjj7t.ap-south-1.elasticbeanstalk.com";
+  const host = "https://mynotebookbackend-0n7e.onrender.com";
 
   //show alert
   const showAlert = (message) => {
