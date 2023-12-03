@@ -11,6 +11,7 @@ import noteContext from './context/notes/noteContext';
 import Spinner from './components/Spinner';
 import LoadingBar from "react-top-loading-bar";
 import Landing from './components/Landing';
+import Footer from './components/Footer';
 function App() {
   const context = useContext(noteContext);
   const { alert, showAlert, loading, progress, setProgress } = context;
@@ -35,6 +36,7 @@ function App() {
             <Route path="/home" element={<Home/>}/>
           </Routes>
         </div>
+        <Footer/>
       </Router>
     </>
   );

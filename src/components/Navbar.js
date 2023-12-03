@@ -36,7 +36,7 @@ const Navbar = () => {
             {!localStorage.getItem('token')?<form className="d-flex" role="search">
             <Link type="button" className="btn btn-light mx-2" to="/login">Login</Link>
             <Link type="button" className="btn btn-light mx-2" to="/signup">Signup</Link>
-            </form>: <div className='d-flex align-items-center'> <p style={{color:'black',margin:0}}>{userData.name && `${userData.name[0].toUpperCase()+userData.name.slice(1)}` }</p>
+            </form>: <div className='d-flex align-items-center'> <p style={{color:'black',margin:0}}>{userData.email}</p>
             <button className='btn btn-secondary mx-2' onClick={handleLogout}>Logout</button> </div>}
 
             </div>

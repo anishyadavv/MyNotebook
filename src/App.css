@@ -129,6 +129,12 @@ body{
   margin: auto;
   transform: rotate(344deg);
 }
+.logoutbtn{
+  position: absolute;
+  right: 8px;
+  top:45px;
+}
+
 
 @media only screen and (max-width: 800px) {
   .landing img{
@@ -140,5 +146,8 @@ body{
   .landing .left{
      text-align: center;
   }
-
+  .logoutbtn{
+    position: static;
+    right:0;
+  }
 }
