@@ -26,10 +26,10 @@ const NoteData = (note) => {
     <>
       <div className="blurbackground" onClick={closepopup}></div>
       <div className="note-data">
-        {/* <i
+        <i
           className="fa-solid fa-xmark fa-lg d-flex flex-row-reverse cross"
           onClick={closepopup}
-        ></i> */}
+        ></i>
         <h1>{note.title}</h1>
         <p className="noteDescription" id="description">
           <AutoLinkText text ={note.description}/>

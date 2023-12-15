@@ -8,13 +8,12 @@ const Navbar = () => {
     const context  = useContext(noteContext);
     const {userData} = context;
     useEffect(()=>{
-        
     },[location])
   const handleLogout=()=>{
     localStorage.removeItem('token');
     navigate('/login');
   }
- 
+
   return (
     <div>
         <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
@@ -32,7 +31,6 @@ const Navbar = () => {
                 <Link className={`nav-link ${location.pathname==='/about'?"active":""}`} to="/About" hidden>About</Link>
                 </li>
             </ul>
-            
             {!localStorage.getItem('token')?<form className="d-flex" role="search">
             <Link type="button" className="btn btn-light mx-2" to="/login">Login</Link>
             <Link type="button" className="btn btn-light mx-2" to="/signup">Signup</Link>

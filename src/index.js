@@ -11,7 +11,6 @@ root.render(
     <NoteState>
     <App />
     </NoteState>
-    
   </React.StrictMode>
 );
 
