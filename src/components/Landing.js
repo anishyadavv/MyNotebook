@@ -11,7 +11,7 @@ const Landing = () => {
       // eslint-disable-next-line
     },[]);
   return (
-    <div>
+    <div style={{height:'70vh'}}>
       <div className="row landing">
         <div className="col-lg-5 col-md-6 left">
           <h1>
