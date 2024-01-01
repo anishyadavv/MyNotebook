@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import noteContext from "../context/notes/noteContext";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   let navigate = useNavigate();
@@ -47,6 +48,7 @@ const Signup = () => {
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       navigate("/");
+      toast.success("Sign up successfull")
     } else {
       setError(json.error);
     }

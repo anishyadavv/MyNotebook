@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NoteContext from "./noteContext";
+import toast from "react-hot-toast";
 
 const NoteState = (props) => {
   const noteinitial = [];
@@ -18,17 +19,8 @@ const NoteState = (props) => {
   const [editNoteid, setEditNoteid] = useState();
   const [showpopup, setpopup] = useState(false);
   const [showAddnote, setAddnote] = useState(false);
-  const [alert, setAlert] = useState("");
   const [progress, setProgress] = useState(0);
-  const host = "http://localhost:5000";
-
-  //show alert
-  const showAlert = (message) => {
-    setAlert(message);
-    setTimeout(() => {
-      setAlert(null);
-    }, 1200);
-  };
+  const host = "https://mynotebookbackend-0n7e.onrender.com";
 
   //fetch notes
   const getNotes = async () => {
@@ -62,7 +54,7 @@ const NoteState = (props) => {
     const json = await response.json();
     setNotes(notes.concat(json));
 
-    showAlert("Note is Added");
+    toast.success("Note Added");
   };
   //delete a note
   const deleteNote = async (id) => {
@@ -84,8 +76,7 @@ const NoteState = (props) => {
     });
     setFilterednotes(filteredNotes);
     setNotes(newNotes);
-
-    showAlert("Note Deleted");
+    toast.success("Note Deleted");
   };
   //pin a note
 
@@ -108,7 +99,7 @@ const NoteState = (props) => {
     })
     console.log(newNotes);
     setNotes(newNotes);
-    showAlert("Note pinned");
+   toast.success("Note Pinned");
   }
   //unpin a note
   const unpinNotes = async (id) => {
@@ -130,7 +121,7 @@ const NoteState = (props) => {
      });
      console.log(newNotes);
      setNotes(newNotes);
-    showAlert("Note unpinned pinned");
+    toast.success("Note Unpinned");
   };
 
   // edit a note
@@ -175,7 +166,7 @@ const NoteState = (props) => {
 
     setNotes(newNotes);
     setProgress(100);
-    showAlert("Note Updated");
+    toast.success("Note Updated");
   };
   // get userdata
   const getUserData = async () => {
@@ -208,9 +199,6 @@ const NoteState = (props) => {
         setEditNote,
         editNoteid,
         setEditNoteid,
-        alert,
-        setAlert,
-        showAlert,
         loading,
         setLoading,
         getUserData,

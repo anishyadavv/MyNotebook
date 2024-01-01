@@ -1,6 +1,7 @@
 import React, { useContext,useState} from "react";
 import {useNavigate,Link} from 'react-router-dom';
 import noteContext from "../context/notes/noteContext";
+import toast from "react-hot-toast";
 
 
 const Login = () => {
@@ -52,13 +53,14 @@ const Login = () => {
         if(json.success){
             localStorage.setItem('token', json.authtoken);
             navigate('/');
+            toast.success("Logged in successfully");
         }
         else{
             setError(json.error);
+            toast.error(json.error);
         }
     }
 
-    
   return (
     <div className="login">
       {/* {loading && <Spinner/>} */}

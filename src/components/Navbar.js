@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import noteContext from '../context/notes/noteContext';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Navbar = () => {
     },[location])
   const handleLogout=()=>{
     localStorage.removeItem('token');
+    toast.success("logged Out");
     navigate('/login');
   }
 
