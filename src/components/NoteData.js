@@ -32,10 +32,12 @@ const NoteData = (note) => {
         ></i>
         <h1>{note.title}</h1>
         <p className="noteDescription" id="description">
-          <AutoLinkText text ={note.description}/>
+          <AutoLinkText text={note.description} />
         </p>
-        <b className="notedata-tag">{note.tag}</b>
-        <p className="time">{`${date.getDate()} ${month} ${date.getFullYear()}`}</p>
+        <div className="notedata d-flex align-content-center justify-content-between">
+          <b>{note.tag}</b>
+          <p className="notedata-date">{`${date.getDate()} ${month} ${date.getFullYear()}`}</p>
+        </div>
       </div>
     </>
   );

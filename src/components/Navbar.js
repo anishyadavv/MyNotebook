@@ -7,12 +7,13 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const context  = useContext(noteContext);
-    const {userData} = context;
+    const {userData,setNotes} = context;
     useEffect(()=>{
     },[location])
   const handleLogout=()=>{
     localStorage.removeItem('token');
     toast.success("logged Out");
+    setNotes([]);
     navigate('/login');
   }
 
