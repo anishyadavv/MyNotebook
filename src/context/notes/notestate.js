@@ -20,7 +20,7 @@ const NoteState = (props) => {
   const [showAddnote, setAddnote] = useState(false);
   const [alert, setAlert] = useState("");
   const [progress, setProgress] = useState(0);
-  const host = "https://mynotebookbackend-0n7e.onrender.com";
+  const host = "http://localhost:5000";
 
   //show alert
   const showAlert = (message) => {
@@ -86,6 +86,51 @@ const NoteState = (props) => {
     setNotes(newNotes);
 
     showAlert("Note Deleted");
+  };
+  //pin a note
+
+  const pinNotes = async(id)=>{
+    const response = await fetch(`${host}/api/notes/pin/${id}`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = response.json();
+    const newNotes = notes.map((note)=>{
+      if(note._id === id){
+       note.pinned = true;
+      }
+      return note;
+    })
+    console.log(newNotes);
+    setNotes(newNotes);
+    showAlert("Note pinned");
+  }
+  //unpin a note
+  const unpinNotes = async (id) => {
+    const response = await fetch(`${host}/api/notes/unpin/${id}`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = response.json();
+     const newNotes = notes.map((note) => {
+       if (note._id === id) {
+         note.pinned = false;
+       }
+       return note;
+     });
+     console.log(newNotes);
+     setNotes(newNotes);
+    showAlert("Note unpinned pinned");
   };
 
   // edit a note
@@ -181,6 +226,8 @@ const NoteState = (props) => {
         setFilterednotes,
         progress,
         setProgress,
+        pinNotes,
+        unpinNotes
       }}
     >
       {props.children}

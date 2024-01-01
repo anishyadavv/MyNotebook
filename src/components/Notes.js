@@ -21,6 +21,13 @@ const Notes = () => {
     filterednotes,
     setFilterednotes,
   } = context;
+
+  const pinnedNotes = notes.filter((note) => {
+    return note.pinned === true;
+  })
+  const unpinnedNotes = notes.filter((note) =>{
+    return note.pinned !== true;
+  });
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {
     setpopup(true);
@@ -88,13 +95,20 @@ const Notes = () => {
       <div className="container">
         <div className="row my-3">
           <h2 className="mb-4">Your Notes</h2>
-
+          {/* pinned notes  */}
+          {(pinnedNotes && search.length===0) && pinnedNotes.map((e)=>{
+            return (
+              <NoteItem
+                key={e._id}
+                editNote={() => editNote(e._id, e)}
+                note={e}
+              />
+            )
+          }).reverse()}
+          {/* pinned notes and filtered */}
           {notes.length !== 0 ? (
             search.length === 0 ? (
-              notes
-                .sort((a, b) => {
-                  return new Date(b.date) - new Date(a.date);
-                })
+              unpinnedNotes
                 .map((e) => {
                   return (
                     <NoteItem
@@ -103,14 +117,11 @@ const Notes = () => {
                       note={e}
                     />
                   );
-                })
+                }).reverse()
             ) : filterednotes.length === 0 ? (
               <h1 className="text-center">Note Not Found!</h1>
             ) : (
               filterednotes
-                .sort((a, b) => {
-                  return new Date(b.date) - new Date(a.date);
-                })
                 .map((e) => {
                   return (
                     <NoteItem
@@ -119,7 +130,7 @@ const Notes = () => {
                       note={e}
                     />
                   );
-                })
+                }).reverse()
             )
           ) : (
             <h1 className="text-center">No Notes To Display</h1>
