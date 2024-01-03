@@ -20,7 +20,7 @@ const NoteState = (props) => {
   const [showpopup, setpopup] = useState(false);
   const [showAddnote, setAddnote] = useState(false);
   const [progress, setProgress] = useState(0);
-  const host = "http://localhost:5000";
+  const host = "https://mynotebookbackend-0n7e.onrender.com";
 
   //fetch notes
   const getNotes = async () => {
