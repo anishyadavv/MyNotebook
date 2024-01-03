@@ -67,8 +67,8 @@ const NoteItem = (props) => {
           <div className="card-body">
             <div className="d-flex align-items-center justify-content-between">
               <h5 className="card-title">
-                {note.title.length > 14
-                  ? note.title.slice(0, 14) + "..."
+                {note.title.length > 12
+                  ? note.title.slice(0, 12) + "..."
                   : note.title}
               </h5>
               <div>
