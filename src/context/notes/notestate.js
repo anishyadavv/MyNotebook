@@ -20,7 +20,7 @@ const NoteState = (props) => {
   const [showpopup, setpopup] = useState(false);
   const [showAddnote, setAddnote] = useState(false);
   const [progress, setProgress] = useState(0);
-  const host = "https://mynotebookbackend-0n7e.onrender.com";
+  const host = "http://localhost:5000";
 
   //fetch notes
   const getNotes = async () => {
@@ -81,6 +81,14 @@ const NoteState = (props) => {
   //pin a note
 
   const pinNotes = async(id)=>{
+    const newNotes = notes.map((note) => {
+      if (note._id === id) {
+        note.pinned = true;
+      }
+      return note;
+    });
+    setNotes(newNotes);
+    toast.success("Note Pinned");
     const response = await fetch(`${host}/api/notes/pin/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -90,19 +98,29 @@ const NoteState = (props) => {
         "auth-token": localStorage.getItem("token"),
       },
     });
-    const json = response.json();
-    const newNotes = notes.map((note)=>{
-      if(note._id === id){
-       note.pinned = true;
-      }
-      return note;
-    })
-    console.log(newNotes);
-    setNotes(newNotes);
-   toast.success("Note Pinned");
+    const json = await response.json();
+    if(json.success) {
+      const newNotes = notes.map((note) => {
+        if (note._id === id) {
+          note.pinned = false;
+        }
+        return note;
+      });
+      setNotes(newNotes);
+      toast.error("Something went wrong");
+    }
   }
   //unpin a note
   const unpinNotes = async (id) => {
+     const newNotes = notes.map((note) => {
+       if (note._id === id) {
+         note.pinned = false;
+       }
+       return note;
+     });
+     console.log(newNotes);
+     setNotes(newNotes);
+     toast.success("Note Unpinned");
     const response = await fetch(`${host}/api/notes/unpin/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -112,16 +130,17 @@ const NoteState = (props) => {
         "auth-token": localStorage.getItem("token"),
       },
     });
-    const json = response.json();
-     const newNotes = notes.map((note) => {
-       if (note._id === id) {
-         note.pinned = false;
-       }
-       return note;
-     });
-     console.log(newNotes);
-     setNotes(newNotes);
-    toast.success("Note Unpinned");
+    const json = await response.json();
+    if (json.success) {
+      const newNotes = notes.map((note) => {
+        if (note._id === id) {
+          note.pinned = true;
+        }
+        return note;
+      });
+      setNotes(newNotes);
+      toast.error("Something went wrong");
+    }
   };
 
   // edit a note

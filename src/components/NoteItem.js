@@ -28,15 +28,11 @@ const NoteItem = (props) => {
     setShowNotes(true);
   };
   const handlepinned = async()=>{
-    setProgress(70);
     await pinNotes(props.note._id);
-    setPinned(true);
     setProgress(100);
   }
   const handleunpinned = async()=>{
-    setProgress(70);
     await unpinNotes(props.note._id);
-    setPinned(false);
     setProgress(100);
   }
   const date = new Date(note.date);
