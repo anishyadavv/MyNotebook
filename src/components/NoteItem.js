@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { Suspense, lazy, useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
-import NoteData from "./NoteData";
+import Spinner from "./Spinner";
+const NoteData = lazy(() => import("./NoteData"));
 
 const NoteItem = (props) => {
   const context = useContext(noteContext);
   const { deleteNote, deleteId, setDeleteId, setProgress, pinNotes,unpinNotes} = context;
-  const [pinned,setPinned] = useState(props.note.pinned);
+  const [pinned] = useState(props.note.pinned);
   const [showNotes, setShowNotes] = useState(false);
   const { note, editNote } = props;
   const showpopup = (id) => {
@@ -53,15 +54,18 @@ const NoteItem = (props) => {
   let month = months[date.getMonth()];
   return (
     <>
-      {showNotes && (
-        <NoteData
-          title={note.title}
-          description={note.description}
-          tag={note.tag}
-          date={date}
-          setShowNotes={setShowNotes}
-        />
-      )}
+      <Suspense fallback={<Spinner/>}>
+        {showNotes && (
+          <NoteData
+            title={note.title}
+            description={note.description}
+            tag={note.tag}
+            date={date}
+            setShowNotes={setShowNotes}
+          />
+        )}
+      </Suspense>
+
       <div className="col-lg-4 col-md-6">
         <div className="card mb-4" style={{ width: "18rem" }}>
           <div className="card-body">
