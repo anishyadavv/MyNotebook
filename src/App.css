@@ -87,6 +87,19 @@ body{
 .eye{
   margin-left: -28px;
 }
+.invalid{
+  color: rgb(238, 83, 83);
+}
+.valid{
+  color:rgb(50, 136, 50);
+}
+.passwordMatch{
+  font-size: small;
+  color: gray;
+}
+.passwordMatch p{
+  margin: 0;
+}
 .warning{
   position: fixed;
   z-index: 2;

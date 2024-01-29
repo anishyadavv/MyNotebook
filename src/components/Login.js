@@ -27,8 +27,11 @@ const Login = () => {
     const handleguest = async(e)=>{
       e.preventDefault();
       setEmail("panda@gmail.com");
-      setPassword("panda");  
+      setPassword("panda");
     }
+
+    
+
     const handleSubmit = async(e)=>{
         e.preventDefault();
         // setLoading(true);
@@ -79,6 +82,7 @@ const Login = () => {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="Enter Email"
+            required
           />
         </div>
         <div className="mb-3">
@@ -89,7 +93,7 @@ const Login = () => {
             <input
               type={type}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e)=>setPassword(e.target.value)}
               className="form-control"
               required
               placeholder="Enter Password"
