@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import noteImg from './note.png';
+import noteImg from '../assets/note.webp';
 import { Link,useNavigate } from 'react-router-dom';
 
 const Landing = () => {
