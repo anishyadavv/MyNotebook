@@ -207,6 +207,10 @@ i {
   bottom: -7px;
   left: 15px;
 }
+.card-text{
+  height: 100px;
+  overflow: hidden;
+}
 .time{
   position: absolute;
   bottom: -7px;

@@ -17,7 +17,7 @@ router.post('/createUser', async (req,res)=>{
         const salt = await bcrypt.genSalt(10);
         const securePass = await bcrypt.hash(req.body.password,salt);
 
-        userData = await User.create({
+        const userData = await User.create({
             name: req.body.name,
             password: securePass,
             email: req.body.email,
@@ -40,14 +40,13 @@ router.post('/createUser', async (req,res)=>{
 //Authenticate login
 
 router.post('/login', async (req,res)=>{
-    const {email, password} = req.body; 
+    const {email, password} = req.body;
     let success = false;
     try{
         const user = await User.findOne({email});
         if(!user){
             return res.json({success,error:"Please enter valid credintials"});
         }
-        
         const passwordCompare = await bcrypt.compare(password, user.password);
         if(!passwordCompare){
             return res.json({success,error: "Please enter valid credintials"});
