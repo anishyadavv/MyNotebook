@@ -5,11 +5,19 @@ const NoteData = lazy(() => import("./NoteData"));
 
 const NoteItem = (props) => {
   const context = useContext(noteContext);
-  const { deleteNote, deleteId, setDeleteId, setProgress, pinNotes,unpinNotes} = context;
+  const {
+    deleteNote,
+    deleteId,
+    setDeleteId,
+    setProgress,
+    pinNotes,
+    unpinNotes,
+  } = context;
   const [pinned] = useState(props.note.pinned);
   const [showNotes, setShowNotes] = useState(false);
   const { note, editNote } = props;
-  const showpopup = (id) => {
+  const showpopup = (e, id) => {
+    e.preventDefault();
     document.querySelector(".popup").style.display = "block";
     document.querySelector(".blurbackground").style.display = "block";
     setDeleteId(id);
@@ -28,14 +36,14 @@ const NoteItem = (props) => {
   const handleClick = () => {
     setShowNotes(true);
   };
-  const handlepinned = async()=>{
+  const handlepinned = async () => {
     await pinNotes(props.note._id);
     setProgress(100);
-  }
-  const handleunpinned = async()=>{
+  };
+  const handleunpinned = async () => {
     await unpinNotes(props.note._id);
     setProgress(100);
-  }
+  };
   const date = new Date(note.date);
   const months = [
     "January",
@@ -54,7 +62,7 @@ const NoteItem = (props) => {
   let month = months[date.getMonth()];
   return (
     <>
-      <Suspense fallback={<Spinner/>}>
+      <Suspense fallback={<Spinner />}>
         {showNotes && (
           <NoteData
             title={note.title}
@@ -90,16 +98,20 @@ const NoteItem = (props) => {
                 )}
                 <i
                   className="fa-solid fa-trash mx-2"
-                  onClick={() => showpopup(note._id)}
+                  onClick={(e) => showpopup(e, note._id)}
                 ></i>
                 <i
-                  className="fa-sharp fa-solid fa-file-pen mx-2"
+                  className="fa-sharp fa-solid fa-file-pen ms-2"
                   onClick={() => editNote(note._id)}
                 ></i>
-                <i className="fa-solid fa-expand" onClick={handleClick}></i>
+                {/* <i className="fa-solid fa-expand" onClick={handleClick}></i> */}
               </div>
             </div>
-            <p className="card-text" style={{ whiteSpace: "pre-wrap" }}>
+            <p
+              className="card-text"
+              style={{ whiteSpace: "pre-wrap" }}
+              onClick={handleClick}
+            >
               {note.description.length > 90
                 ? note.description.slice(0, 90) + "...."
                 : note.description}
