@@ -11,7 +11,9 @@ const NoteData = (note) => {
   const { editNote, setEditNote, noteedit, editNoteid } = context;
   const closepopup = async () => {
     note.setShowNotes(false);
-    if (note.title !== noteedit.etitle || note.tag !== noteedit.etag) {
+
+    console.log(noteedit);
+    if (note.title !== noteedit.etitle || note.tag !== noteedit.etag || note.description !== noteedit.edescription) {
       await editNote(note.id);
       console.log(noteedit);
     }
@@ -61,9 +63,15 @@ const NoteData = (note) => {
             style={{ fontWeight: 500 }}
           />
         </h1>
-        <p className="noteDescription" id="description">
-          <AutoLinkText text={note.description} />
-        </p>
+        <textarea
+          className="noteDescription"
+          id="description"
+          name="edescription"
+          value={noteedit.edescription}
+          onChange={handleChange}
+        />
+        {/* <AutoLinkText text={note.description} /> */}
+
         <div className="notedata d-flex align-content-center justify-content-between">
           <input
             type="text"
