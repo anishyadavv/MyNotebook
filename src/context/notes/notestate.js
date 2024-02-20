@@ -80,7 +80,7 @@ const NoteState = (props) => {
   };
   //pin a note
 
-  const pinNotes = async(id)=>{
+  const pinNotes = async (id) => {
     const newNotes = notes.map((note) => {
       if (note._id === id) {
         note.pinned = true;
@@ -99,7 +99,7 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    if(json.success) {
+    if (json.success) {
       const newNotes = notes.map((note) => {
         if (note._id === id) {
           note.pinned = false;
@@ -109,18 +109,18 @@ const NoteState = (props) => {
       setNotes(newNotes);
       toast.error("Something went wrong");
     }
-  }
+  };
   //unpin a note
   const unpinNotes = async (id) => {
-     const newNotes = notes.map((note) => {
-       if (note._id === id) {
-         note.pinned = false;
-       }
-       return note;
-     });
-     console.log(newNotes);
-     setNotes(newNotes);
-     toast.success("Note Unpinned");
+    const newNotes = notes.map((note) => {
+      if (note._id === id) {
+        note.pinned = false;
+      }
+      return note;
+    });
+    console.log(newNotes);
+    setNotes(newNotes);
+    toast.success("Note Unpinned");
     const response = await fetch(`${host}/api/notes/unpin/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -145,7 +145,7 @@ const NoteState = (props) => {
 
   // edit a note
   const editNote = async (id) => {
-    setProgress(0);
+    setProgress(90);
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -234,7 +234,7 @@ const NoteState = (props) => {
         progress,
         setProgress,
         pinNotes,
-        unpinNotes
+        unpinNotes,
       }}
     >
       {props.children}
