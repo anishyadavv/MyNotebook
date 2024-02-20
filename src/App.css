@@ -146,6 +146,14 @@ body{
   right: 8px;
   top:45px;
 }
+.note-data-tag{
+  outline: none;
+  border: none;
+}
+.note-data-title{
+  outline: none;
+  border: none;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
