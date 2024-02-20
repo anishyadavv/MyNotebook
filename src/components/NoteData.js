@@ -3,19 +3,17 @@ import AutoLinkText from "./Autolink";
 import noteContext from "../context/notes/noteContext";
 
 const NoteData = (note) => {
-  const [title, setTitle] = useState(note.title);
-  const [tag, setTag] = useState(note.tag);
-  const [description, setDescription] = useState(note.description);
-
   const context = useContext(noteContext);
-  const { editNote, setEditNote, noteedit, editNoteid } = context;
+  const { editNote, setEditNote, noteedit} = context;
   const closepopup = async () => {
     note.setShowNotes(false);
 
-    console.log(noteedit);
-    if (note.title !== noteedit.etitle || note.tag !== noteedit.etag || note.description !== noteedit.edescription) {
+    if (
+      note.title !== noteedit.etitle ||
+      note.tag !== noteedit.etag ||
+      note.description !== noteedit.edescription
+    ) {
       await editNote(note.id);
-      console.log(noteedit);
     }
   };
   const handleChange = (e) => {
@@ -61,16 +59,20 @@ const NoteData = (note) => {
             value={noteedit.etitle}
             onChange={handleChange}
             style={{ fontWeight: 500 }}
+            placeholder="Title"
           />
         </h1>
         <textarea
           className="noteDescription"
+          placeholder="Description"
           id="description"
           name="edescription"
           value={noteedit.edescription}
           onChange={handleChange}
         />
-        {/* <AutoLinkText text={note.description} /> */}
+        {/* <div className="links">
+          <AutoLinkText text={note.description} />
+        </div> */}
 
         <div className="notedata d-flex align-content-center justify-content-between">
           <input
@@ -80,6 +82,7 @@ const NoteData = (note) => {
             value={noteedit.etag}
             onChange={handleChange}
             style={{ fontWeight: 700 }}
+            placeholder="Tag"
           />
           <p className="notedata-date">{`${date.getDate()} ${month} ${date.getFullYear()}`}</p>
         </div>

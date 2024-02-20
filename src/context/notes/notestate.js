@@ -145,7 +145,7 @@ const NoteState = (props) => {
 
   // edit a note
   const editNote = async (id) => {
-    setProgress(0);
+    setProgress(90);
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

@@ -243,6 +243,9 @@ i {
   border: none;
   outline: none;
 }
+.links{
+  white-space: pre-wrap;
+}
 .notes{
 margin-top: 10vh;
 }
