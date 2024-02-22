@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import AutoLinkText from "./Autolink";
+import React, { useContext, useEffect} from "react";
 import noteContext from "../context/notes/noteContext";
 
 const NoteData = (note) => {
+
   const context = useContext(noteContext);
   const { editNote, setEditNote, noteedit} = context;
+
   const closepopup = async () => {
     note.setShowNotes(false);
 
@@ -16,9 +17,11 @@ const NoteData = (note) => {
       await editNote(note.id);
     }
   };
+
   const handleChange = (e) => {
     setEditNote({ ...noteedit, [e.target.name]: e.target.value });
   };
+
   const date = new Date(note.date);
   const months = [
     "January",
@@ -34,6 +37,7 @@ const NoteData = (note) => {
     "November",
     "December",
   ];
+
   let month = months[date.getMonth()];
 
   useEffect(() => {
@@ -43,6 +47,7 @@ const NoteData = (note) => {
       etag: note.tag,
     });
   }, []);
+  
   return (
     <>
       <div className="blurbackground" onClick={closepopup}></div>

@@ -1,50 +1,95 @@
-import React, { useContext, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import noteContext from '../context/notes/noteContext';
-import toast from 'react-hot-toast';
-
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import noteContext from "../context/notes/noteContext";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUserData } from "../features/user/userSlice";
 const Navbar = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const context  = useContext(noteContext);
-    const {userData,setNotes} = context;
-    useEffect(()=>{
-    },[location])
-  const handleLogout=()=>{
-    localStorage.removeItem('token');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const user = useSelector((state) => state.user.email);
+  const dispatch = useDispatch();
+  const context = useContext(noteContext);
+  const { setNotes } = context;
+  useEffect(() => {}, [location]);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
     toast.success("logged Out");
     setNotes([]);
-    navigate('/login');
-  }
+    dispatch(clearUserData());
+    navigate("/login");
+  };
 
   return (
     <div>
-        <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
+      <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
         <div className="container-fluid">
-            <Link className="navbar-brand" to="/">My Notebook</Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <Link className="navbar-brand" to="/">
+            My Notebook
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==='/'?"active":""}`} aria-current="page" to="/" hidden>Home</Link>
-                </li>
-                <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==='/about'?"active":""}`} to="/About" hidden>About</Link>
-                </li>
+              <li className="nav-item">
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/" ? "active" : ""
+                  }`}
+                  aria-current="page"
+                  to="/"
+                  hidden
+                >
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/about" ? "active" : ""
+                  }`}
+                  to="/About"
+                  hidden
+                >
+                  About
+                </Link>
+              </li>
             </ul>
-            {!localStorage.getItem('token')?<form className="d-flex" role="search">
-            <Link type="button" className="btn btn-light mx-2" to="/login">Login</Link>
-            <Link type="button" className="btn btn-light mx-2" to="/signup">Signup</Link>
-            </form>: <div className='d-flex align-items-center'> <p style={{color:'black',margin:0}}>{userData.email}</p>
-            <button className='btn btn-secondary mx-2' onClick={handleLogout}>Logout</button> </div>}
-
-            </div>
+            {!localStorage.getItem("token") ? (
+              <form className="d-flex" role="search">
+                <Link type="button" className="btn btn-light mx-2" to="/login">
+                  Login
+                </Link>
+                <Link type="button" className="btn btn-light mx-2" to="/signup">
+                  Signup
+                </Link>
+              </form>
+            ) : (
+              <div className="d-flex align-items-center">
+                {" "}
+                <p style={{ color: "black", margin: 0 }}>{user}</p>
+                <button
+                  className="btn btn-secondary mx-2"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>{" "}
+              </div>
+            )}
+          </div>
         </div>
-        </nav>
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -187,20 +187,6 @@ const NoteState = (props) => {
     setProgress(100);
     toast.success("Note Updated");
   };
-  // get userdata
-  const getUserData = async () => {
-    const response = await fetch(`${host}/api/auth/getuser`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = await response.json();
-    setUserData({ name: json.name, email: json.email });
-  };
   return (
     <NoteContext.Provider
       value={{
@@ -220,7 +206,6 @@ const NoteState = (props) => {
         setEditNoteid,
         loading,
         setLoading,
-        getUserData,
         userData,
         setUserData,
         deleteId,

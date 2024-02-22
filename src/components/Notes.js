@@ -3,10 +3,15 @@ import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../features/user/userSlice";
+import { getUserData } from "../features/user/userSlice";
 const EditNote = lazy(() => import("./EditNote"));
 const AddNote = lazy(() => import("./AddNote"));
+
 const Notes = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const context = useContext(noteContext);
   const {
     notes,
@@ -15,7 +20,6 @@ const Notes = () => {
     setpopup,
     setEditNote,
     setEditNoteid,
-    getUserData,
     showAddnote,
     setAddnote,
     filterednotes,
@@ -59,7 +63,7 @@ const Notes = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getNotes();
-      getUserData();
+      dispatch(getUserData());
     } else {
       navigate("/login");
     }
