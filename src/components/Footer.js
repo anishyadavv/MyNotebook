@@ -1,11 +1,19 @@
-import React from 'react'
+import React from "react";
+import { useLocation } from "react-router";
 
 const Footer = () => {
+  const location = useLocation();
   return (
     <div>
-      <p className='text-center'>Made with ❤️ by Anish</p>
+      <p
+        className={`text-center mt-2 ${
+          location.pathname === "/login" ? "d-none" : ""
+        }`}
+      >
+        Made with ❤️ by Anish
+      </p>
     </div>
   );
-}
+};
 
-export default Footer
+export default Footer;
