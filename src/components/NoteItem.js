@@ -69,6 +69,7 @@ const NoteItem = (props) => {
             description={note.description}
             tag={note.tag}
             date={date}
+            id={note._id}
             setShowNotes={setShowNotes}
           />
         )}
