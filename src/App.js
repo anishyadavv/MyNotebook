@@ -12,9 +12,11 @@ import LoadingBar from "react-top-loading-bar";
 import Landing from './components/Landing';
 import Footer from './components/Footer';
 import { Toaster } from "react-hot-toast";
+import { useSelector } from 'react-redux';
 function App() {
   const context = useContext(noteContext);
-  const { alert, showAlert, loading, progress, setProgress } = context;
+  const {loading,setProgress } = context;
+  const progress = useSelector(state=>state.notes.progress);
   return (
     <>
       <Router>

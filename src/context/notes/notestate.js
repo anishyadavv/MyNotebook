@@ -10,7 +10,6 @@ const NoteState = (props) => {
   const [loading, setLoading] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [deleteId, setDeleteId] = useState("");
-  const [userData, setUserData] = useState({ name: null, email: null });
   const [noteedit, setEditNote] = useState({
     etitle: "",
     edescription: "",
@@ -23,39 +22,9 @@ const NoteState = (props) => {
   const host = "https://mynotebookbackend-0n7e.onrender.com";
 
   //fetch notes
-  const getNotes = async () => {
-    setProgress(90);
-    const response = await fetch(`${host}/api/notes/fetchAllnotes`, {
-      method: "GET", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = await response.json();
-    setNotes(json);
-    setProgress(100);
-  };
 
   // add a note
-  const addNote = async ({ title, description, tag }) => {
-    const response = await fetch(`${host}/api/notes/addNotes`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ title, description, tag }),
-    });
-    const json = await response.json();
-    setNotes(notes.concat(json));
 
-    toast.success("Note Added");
-  };
   //delete a note
   const deleteNote = async (id) => {
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
@@ -192,10 +161,8 @@ const NoteState = (props) => {
       value={{
         notes,
         setNotes,
-        addNote,
         deleteNote,
         editNote,
-        getNotes,
         showpopup,
         setpopup,
         note,
@@ -206,8 +173,6 @@ const NoteState = (props) => {
         setEditNoteid,
         loading,
         setLoading,
-        userData,
-        setUserData,
         deleteId,
         setDeleteId,
         showAddnote,

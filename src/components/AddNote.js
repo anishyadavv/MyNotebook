@@ -1,33 +1,37 @@
-import React, { useContext} from "react";
+import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
+import { addNote } from "../features/notes/notesSlice";
+import { useDispatch } from "react-redux";
 
 const AddNote = () => {
-    const context = useContext(noteContext);
-    const { addNote, note, setNote, setAddnote,setProgress } =
-      context;
+  const dispatch = useDispatch();
+  const [note, setNote] = useState({
+    title: "",
+    description: "",
+    tag: "",
+  });
+  const context = useContext(noteContext);
+  const { setAddnote } = context;
+  const handleChange = (e) => {
+    setNote({ ...note, [e.target.name]: e.target.value });
+  };
+  const closepopup = () => {
+    setAddnote(false);
+  };
 
-  
-    const handleChange=(e)=>{
-        setNote({...note,[e.target.name]:e.target.value})
-
-    }
-    const closepopup = ()=>{
-      setAddnote(false);
-    }
-
-    const handleClick =async(e)=>{
-        e.preventDefault();
-        setProgress(70);
-        await addNote(note);
-        setNote({title:"",description:"",tag:""});
-        setProgress(100);
-        setAddnote(false);
-    }
+  const handleClick = async (e) => {
+    e.preventDefault();
+    dispatch(addNote(note));
+    setAddnote(false);
+  };
   return (
     <>
       <div className="blurbackground" onClick={closepopup}></div>
       <div className=" addnote container my-5">
-        <i className="fa-solid fa-xmark fa-lg d-flex flex-row-reverse" onClick={closepopup}></i>
+        <i
+          className="fa-solid fa-xmark fa-lg d-flex flex-row-reverse"
+          onClick={closepopup}
+        ></i>
         <h2>Add Notes</h2>
         <form className="my-3">
           <div className="mb-3">
