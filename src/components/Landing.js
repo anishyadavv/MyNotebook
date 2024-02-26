@@ -1,17 +1,21 @@
-import React,{useEffect} from 'react'
-import noteImg from '../assets/note.webp';
-import { Link,useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import noteImg from "../assets/note.webp";
+import { Link, useNavigate } from "react-router-dom";
 
 const Landing = () => {
-    const navigate = useNavigate();
-    useEffect(() => {
-      if (localStorage.getItem("token")) {
-        navigate("/home");
-      }
-      // eslint-disable-next-line
-    },[]);
+  const navigate = useNavigate();
+  const startServer = async () => {
+    const response = await fetch("https://mynotebookbackend-0n7e.onrender.com");
+  };
+  useEffect(() => {
+    startServer();
+    if (localStorage.getItem("token")) {
+      navigate("/home");
+    }
+    // eslint-disable-next-line
+  }, []);
   return (
-    <div style={{height:'70vh'}}>
+    <div style={{ height: "70vh" }}>
       <div className="row landing">
         <div className="col-lg-5 col-md-6 left">
           <h1>
@@ -32,6 +36,6 @@ const Landing = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Landing
+export default Landing;
