@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import { addNote } from "../features/notes/notesSlice";
 import { useDispatch } from "react-redux";
-
 const AddNote = () => {
   const dispatch = useDispatch();
   const [note, setNote] = useState({

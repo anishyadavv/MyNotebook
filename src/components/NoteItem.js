@@ -1,12 +1,14 @@
 import React, { Suspense, lazy, useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import Spinner from "./Spinner";
+import { useDispatch } from "react-redux";
+import { deleteNote } from "../features/notes/notesSlice";
 const NoteData = lazy(() => import("./NoteData"));
 
 const NoteItem = (props) => {
+  const dispatch = useDispatch();
   const context = useContext(noteContext);
   const {
-    deleteNote,
     deleteId,
     setDeleteId,
     setProgress,
@@ -30,7 +32,7 @@ const NoteItem = (props) => {
     document.querySelector(".popup").style.display = "none";
     document.querySelector(".blurbackground").style.display = "none";
     setProgress(70);
-    await deleteNote(deleteId);
+    dispatch(deleteNote(deleteId));
     setProgress(100);
   };
   const handleClick = () => {

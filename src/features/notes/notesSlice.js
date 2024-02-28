@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const host = "https://mynotebookbackend-0n7e.onrender.com";
 const initialState = {
@@ -21,17 +22,37 @@ export const getNotes = createAsyncThunk("getNotes", async () => {
 export const addNote = createAsyncThunk(
   "addNote",
   async (note, { rejectWithValue }) => {
-    console.log(note);
-    const response = await fetch(`${host}/api/notes/addNotes`, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify(note),
-    });
     try {
+      const response = await fetch(`${host}/api/notes/addNotes`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(note),
+      });
+
+      const json = await response.json();
+      return json;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteNote = createAsyncThunk(
+  "deleteNote",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
       const json = await response.json();
       return json;
     } catch (error) {
@@ -55,15 +76,41 @@ export const notesSlice = createSlice({
       .addCase(getNotes.rejected, (state) => {
         state.progress = 100;
         console.log("rejected get notes request");
+      });
+
+    builder
+      .addCase(addNote.pending, (state) => {
+        state.progress = 80;
       })
-      .addCase(addNote.pending, (state) => (state.progress = 80))
       .addCase(addNote.fulfilled, (state, action) => {
         state.progress = 100;
-        console.log("fullfilled");
+        state.notes.push(action.payload);
+        toast.success("Note Added");
       })
       .addCase(addNote.rejected, (state) => {
         state.progress = 100;
         console.log("rejected add notes");
+        toast.error("something went wrong");
+      });
+
+    builder
+      .addCase(deleteNote.pending, (state) => {
+        state.progress = 80;
+      })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        state.progress = 100;
+        const id = action.meta.arg;
+        const newNotes = state.notes.filter((note) => {
+          return note._id !== id;
+        });
+
+        state.notes.length = 0;
+        state.notes = [...newNotes];
+        toast.success("Note Deleted");
+      })
+      .addCase(deleteNote.rejected, (state, action) => {
+        state.progress = 100;
+        toast.error("something went wrong");
       });
   },
 });

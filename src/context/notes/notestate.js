@@ -26,27 +26,7 @@ const NoteState = (props) => {
   // add a note
 
   //delete a note
-  const deleteNote = async (id) => {
-    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
-      method: "DELETE", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = response.json();
-    const newNotes = notes.filter((note) => {
-      return note._id !== id;
-    });
-    const filteredNotes = filterednotes.filter((note) => {
-      return note._id !== id;
-    });
-    setFilterednotes(filteredNotes);
-    setNotes(newNotes);
-    toast.success("Note Deleted");
-  };
+
   //pin a note
 
   const pinNotes = async (id) => {
@@ -161,7 +141,6 @@ const NoteState = (props) => {
       value={{
         notes,
         setNotes,
-        deleteNote,
         editNote,
         showpopup,
         setpopup,

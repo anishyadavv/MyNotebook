@@ -6,8 +6,9 @@ import Spinner from "./Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../features/notes/notesSlice";
 import { getUserData } from "../features/user/userSlice";
+import AddNote from "./AddNote";
 const EditNote = lazy(() => import("./EditNote"));
-const AddNote = lazy(() => import("./AddNote"));
+// const AddNote = lazy(() => import("./AddNote"));
 
 const Notes = () => {
   const navigate = useNavigate();
@@ -92,7 +93,8 @@ const Notes = () => {
           />
         </div>
       </div>
-      <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense>
+      {/* <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense> */}
+      {showAddnote && <AddNote />}
       <Suspense fallback={<Spinner />}>{showpopup && <EditNote />}</Suspense>
 
       <div className="container">
