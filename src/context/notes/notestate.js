@@ -28,69 +28,7 @@ const NoteState = (props) => {
   //delete a note
 
   //pin a note
-
-  const pinNotes = async (id) => {
-    const newNotes = notes.map((note) => {
-      if (note._id === id) {
-        note.pinned = true;
-      }
-      return note;
-    });
-    setNotes(newNotes);
-    toast.success("Note Pinned");
-    const response = await fetch(`${host}/api/notes/pin/${id}`, {
-      method: "PUT", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = await response.json();
-    if (json.success) {
-      const newNotes = notes.map((note) => {
-        if (note._id === id) {
-          note.pinned = false;
-        }
-        return note;
-      });
-      setNotes(newNotes);
-      toast.error("Something went wrong");
-    }
-  };
   //unpin a note
-  const unpinNotes = async (id) => {
-    const newNotes = notes.map((note) => {
-      if (note._id === id) {
-        note.pinned = false;
-      }
-      return note;
-    });
-    console.log(newNotes);
-    setNotes(newNotes);
-    toast.success("Note Unpinned");
-    const response = await fetch(`${host}/api/notes/unpin/${id}`, {
-      method: "PUT", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = await response.json();
-    if (json.success) {
-      const newNotes = notes.map((note) => {
-        if (note._id === id) {
-          note.pinned = true;
-        }
-        return note;
-      });
-      setNotes(newNotes);
-      toast.error("Something went wrong");
-    }
-  };
 
   // edit a note
   const editNote = async (id) => {
@@ -162,8 +100,6 @@ const NoteState = (props) => {
         setFilterednotes,
         progress,
         setProgress,
-        pinNotes,
-        unpinNotes,
       }}
     >
       {props.children}

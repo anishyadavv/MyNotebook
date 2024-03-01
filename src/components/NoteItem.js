@@ -2,7 +2,8 @@ import React, { Suspense, lazy, useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import Spinner from "./Spinner";
 import { useDispatch } from "react-redux";
-import { deleteNote } from "../features/notes/notesSlice";
+import { deleteNote, pinNotes,unpinNotes } from "../features/notes/notesSlice";
+
 const NoteData = lazy(() => import("./NoteData"));
 
 const NoteItem = (props) => {
@@ -12,8 +13,6 @@ const NoteItem = (props) => {
     deleteId,
     setDeleteId,
     setProgress,
-    pinNotes,
-    unpinNotes,
   } = context;
   const [pinned] = useState(props.note.pinned);
   const [showNotes, setShowNotes] = useState(false);
@@ -39,11 +38,11 @@ const NoteItem = (props) => {
     setShowNotes(true);
   };
   const handlepinned = async () => {
-    await pinNotes(props.note._id);
+    dispatch(pinNotes(props.note._id));
     setProgress(100);
   };
   const handleunpinned = async () => {
-    await unpinNotes(props.note._id);
+    dispatch(unpinNotes(props.note._id));
     setProgress(100);
   };
   const date = new Date(note.date);
