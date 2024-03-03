@@ -1,5 +1,4 @@
-import React, { Suspense, lazy, useContext, useEffect, useState } from "react";
-import noteContext from "../context/notes/noteContext";
+import React, { Suspense, lazy,useEffect, useState } from "react";
 import NoteItem from "./NoteItem";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
@@ -8,8 +7,6 @@ import { getNotes } from "../features/notes/notesSlice";
 import { getUserData } from "../features/user/userSlice";
 import { setNoteToBeEdited } from "../features/notes/notesSlice";
 import { setFilteredNotes } from "../features/notes/notesSlice";
-// import AddNote from "./AddNote";
-// import EditNote from "./EditNote";
 const EditNote = lazy(() => import("./EditNote"));
 const AddNote = lazy(() => import("./AddNote"));
 
@@ -17,15 +14,9 @@ const Notes = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.notes.notes);
-  const filterednotes = useSelector((state) => state.notes.filteredNotes)
-
-  const context = useContext(noteContext);
-  const {
-    showpopup,
-    setpopup,
-    showAddnote,
-    setAddnote,
-  } = context;
+  const filterednotes = useSelector((state) => state.notes.filteredNotes);
+  const [showAddNote, setShowAddNote] = useState(false);
+  const [showEditNote, setShowEditNote] = useState(false);
 
   const pinnedNotes = notes.filter((note) => {
     return note.pinned === true;
@@ -35,17 +26,17 @@ const Notes = () => {
   });
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {
-    setpopup(true);
+    setShowEditNote(true);
     const editNoteData = {
       id,
       title: currentNote.title,
       description: currentNote.description,
       tag: currentNote.tag,
-    }
+    };
     dispatch(setNoteToBeEdited(editNoteData));
   };
   const handleAddnote = () => {
-    setAddnote(true);
+    setShowAddNote(true);
   };
   const handleSearch = (e) => {
     let searchValue = e.target.value.toLowerCase();
@@ -73,7 +64,6 @@ const Notes = () => {
   }, []);
   return (
     <div className="notes">
-      {/* <Alert message="hello" showAlert="hello" /> */}
       <div className="container d-md-flex justify-content-between align-items-center mb-4">
         <button className="btn btn-dark mt-4" onClick={handleAddnote}>
           Add Note
@@ -95,10 +85,12 @@ const Notes = () => {
           />
         </div>
       </div>
-      <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense>
-      {/* {showAddnote && <AddNote />} */}
-      <Suspense fallback={<Spinner />}>{showpopup && <EditNote />}</Suspense>
-      {/* {showpopup && <EditNote/>} */}
+      <Suspense fallback={<Spinner />}>
+        {showAddNote && <AddNote setShowAddNote={setShowAddNote} />}
+      </Suspense>
+      <Suspense fallback={<Spinner />}>
+        {showEditNote && <EditNote setShowEditNote={setShowEditNote} />}
+      </Suspense>
 
       <div className="container">
         <div className="row my-3">

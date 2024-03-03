@@ -1,27 +1,24 @@
-import React, { useContext, useState } from "react";
-import noteContext from "../context/notes/noteContext";
+import React, { useState } from "react";
 import { addNote } from "../features/notes/notesSlice";
 import { useDispatch } from "react-redux";
-const AddNote = () => {
+const AddNote = ({setShowAddNote}) => {
   const dispatch = useDispatch();
   const [note, setNote] = useState({
     title: "",
     description: "",
     tag: "",
   });
-  const context = useContext(noteContext);
-  const { setAddnote } = context;
   const handleChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
   const closepopup = () => {
-    setAddnote(false);
+    setShowAddNote(false);
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch(addNote(note));
-    setAddnote(false);
+    setShowAddNote(false);
   };
   return (
     <>

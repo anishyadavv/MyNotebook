@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import noteContext from "../context/notes/noteContext";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUserData } from "../features/user/userSlice";
@@ -9,13 +8,10 @@ const Navbar = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user.email);
   const dispatch = useDispatch();
-  const context = useContext(noteContext);
-  const { setNotes } = context;
   useEffect(() => {}, [location]);
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("logged Out");
-    setNotes([]);
     dispatch(clearUserData());
     navigate("/login");
   };

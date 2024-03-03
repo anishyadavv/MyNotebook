@@ -13,6 +13,7 @@ const initialState = {
     description: "",
     tag: "",
   },
+  deleteNoteId:"",
 };
 
 //get all notes for a user
@@ -148,6 +149,12 @@ export const notesSlice = createSlice({
     },
     setFilteredNotes: (state, action) => {
       state.filteredNotes = action.payload;
+    }
+    ,setProgress:(state,action)=>{
+      state.progress = action.payload;
+    }
+    ,setDeleteNoteId: (state,action)=>{
+      state.deleteNoteId = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -292,6 +299,6 @@ export const notesSlice = createSlice({
   },
 });
 
-export const { setNoteToBeEdited, setFilteredNotes } = notesSlice.actions;
+export const { setProgress,setNoteToBeEdited, setFilteredNotes, setDeleteNoteId } = notesSlice.actions;
 
 export default notesSlice.reducer;

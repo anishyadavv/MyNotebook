@@ -1,18 +1,14 @@
-import React, { useContext, useState } from "react";
-import noteContext from "../context/notes/noteContext";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editNote } from "../features/notes/notesSlice";
 
-const EditNote = () => {
-  const context = useContext(noteContext);
+const EditNote = ({setShowEditNote}) => {
   const dispatch = useDispatch();
   const noteToBeEdited = useSelector((state) => state.notes.noteToBeEdited);
   const [NoteData, setNoteData] = useState(noteToBeEdited);
-  const { setpopup, setProgress } =
-    context;
 
   const closepopup = () => {
-    setpopup(false);
+    setShowEditNote(false);
   };
 
   const handleChange = (e) => {
@@ -21,10 +17,8 @@ const EditNote = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    setProgress(70);
     dispatch(editNote(NoteData));
-    setpopup(false);
-    setProgress(100);
+    setShowEditNote(false);
   };
   return (
     <div>

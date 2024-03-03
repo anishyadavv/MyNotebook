@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { editNote } from "../features/notes/notesSlice";
 import { useDispatch } from "react-redux";
 
 const NoteData = (note) => {
   const dispatch = useDispatch();
   const [NoteData, setNoteData] = useState({
-    id:"",
-    title:"",
-    description:"",
-    tag:""
+    id: "",
+    title: "",
+    description: "",
+    tag: "",
   });
-
 
   const closepopup = async () => {
     note.setShowNotes(false);
@@ -19,7 +18,7 @@ const NoteData = (note) => {
       note.tag !== NoteData.tag ||
       note.description !== NoteData.description
     ) {
-        dispatch(editNote(NoteData))
+      dispatch(editNote(NoteData));
     }
   };
 
@@ -46,14 +45,14 @@ const NoteData = (note) => {
   let month = months[date.getMonth()];
 
   useEffect(() => {
-      setNoteData({
-        id: note.id,
-        title: note.title,
-        description: note.description,
-        tag: note.tag,
-      })
+    setNoteData({
+      id: note.id,
+      title: note.title,
+      description: note.description,
+      tag: note.tag,
+    });
   }, []);
-  
+
   return (
     <>
       <div className="blurbackground" onClick={closepopup}></div>
@@ -71,6 +70,7 @@ const NoteData = (note) => {
             onChange={handleChange}
             style={{ fontWeight: 500 }}
             placeholder="Title"
+            autoFocus
           />
         </h1>
         <textarea
