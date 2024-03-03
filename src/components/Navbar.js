@@ -6,7 +6,7 @@ import { clearUserData } from "../features/user/userSlice";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const user = useSelector((state) => state.user.email);
+  const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {}, [location]);
   const handleLogout = () => {
@@ -18,7 +18,6 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
       <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
@@ -33,21 +32,7 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-          <Link className="navbar-brand" to="/">
-            My Notebook
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
             <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -97,12 +82,8 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      </nav>
     </div>
   );
 };
-  );
-};
 
-export default Navbar;
 export default Navbar;
