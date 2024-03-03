@@ -6,24 +6,25 @@ import Spinner from "./Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../features/notes/notesSlice";
 import { getUserData } from "../features/user/userSlice";
-import AddNote from "./AddNote";
+import { setNoteToBeEdited } from "../features/notes/notesSlice";
+import { setFilteredNotes } from "../features/notes/notesSlice";
+// import AddNote from "./AddNote";
+// import EditNote from "./EditNote";
 const EditNote = lazy(() => import("./EditNote"));
-// const AddNote = lazy(() => import("./AddNote"));
+const AddNote = lazy(() => import("./AddNote"));
 
 const Notes = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.notes.notes);
+  const filterednotes = useSelector((state) => state.notes.filteredNotes)
+
   const context = useContext(noteContext);
   const {
     showpopup,
     setpopup,
-    setEditNote,
-    setEditNoteid,
     showAddnote,
     setAddnote,
-    filterednotes,
-    setFilterednotes,
   } = context;
 
   const pinnedNotes = notes.filter((note) => {
@@ -35,12 +36,13 @@ const Notes = () => {
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {
     setpopup(true);
-    setEditNoteid(id);
-    setEditNote({
-      etitle: currentNote.title,
-      edescription: currentNote.description,
-      etag: currentNote.tag,
-    });
+    const editNoteData = {
+      id,
+      title: currentNote.title,
+      description: currentNote.description,
+      tag: currentNote.tag,
+    }
+    dispatch(setNoteToBeEdited(editNoteData));
   };
   const handleAddnote = () => {
     setAddnote(true);
@@ -57,7 +59,7 @@ const Notes = () => {
         tag.includes(searchValue)
       );
     });
-    setFilterednotes(newNotes);
+    dispatch(setFilteredNotes(newNotes));
     setSearch(searchValue);
   };
   useEffect(() => {
@@ -93,9 +95,10 @@ const Notes = () => {
           />
         </div>
       </div>
-      {/* <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense> */}
-      {showAddnote && <AddNote />}
+      <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense>
+      {/* {showAddnote && <AddNote />} */}
       <Suspense fallback={<Spinner />}>{showpopup && <EditNote />}</Suspense>
+      {/* {showpopup && <EditNote/>} */}
 
       <div className="container">
         <div className="row my-3">

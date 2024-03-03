@@ -6,6 +6,13 @@ const host = "https://mynotebookbackend-0n7e.onrender.com";
 const initialState = {
   progress: 0,
   notes: [],
+  filteredNotes:[],
+  noteToBeEdited: {
+    id: "",
+    title: "",
+    description: "",
+    tag: "",
+  },
 };
 
 //get all notes for a user
@@ -107,9 +114,42 @@ export const unpinNotes = createAsyncThunk(
     }
   }
 );
+
+//edit a note
+export const editNote = createAsyncThunk(
+  "editNote",
+  async (note, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${host}/api/notes/updatenote/${note.id}`, {
+        method: "PUT",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          title: note.title,
+          description: note.description,
+          tag: note.tag,
+        }),
+      });
+      return "success";
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
+  reducers: {
+    setNoteToBeEdited: (state, action) => {
+      state.noteToBeEdited = action.payload;
+    },
+    setFilteredNotes: (state, action) => {
+      state.filteredNotes = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getNotes.pending, (state) => {
@@ -214,7 +254,44 @@ export const notesSlice = createSlice({
         state.notes = [...newNotes];
         toast.error("Something went wrong");
       });
+
+    builder
+      .addCase(editNote.pending, (state) => {
+        state.progress = 90;
+      })
+      .addCase(editNote.fulfilled, (state, action) => {
+        const id = action.meta.arg.id;
+        const newNotes = state.notes.map((note) => {
+          if (note._id === id) {
+            note.title = action.meta.arg.title;
+            note.description = action.meta.arg.description;
+            note.tag = action.meta.arg.tag;
+          }
+          return note;
+        });
+        state.notes.length = 0;
+        state.notes = [...newNotes];
+
+        const filterNotes = state.filteredNotes.map((note)=>{
+          if (note._id === id) {
+            note.title = action.meta.arg.title;
+            note.description = action.meta.arg.description;
+            note.tag = action.meta.arg.tag;
+          }
+          return note;
+        })
+        state.filteredNotes.length = 0;
+        state.filteredNotes = [...filterNotes];
+        toast.success("Note edited successfully");
+        state.progress = 100;
+      })
+      .addCase(editNote.rejected, (state, action) => {
+        toast.error("something went wrong");
+        state.progress = 100;
+      });
   },
 });
+
+export const { setNoteToBeEdited, setFilteredNotes } = notesSlice.actions;
 
 export default notesSlice.reducer;

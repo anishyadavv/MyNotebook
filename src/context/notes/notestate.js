@@ -28,58 +28,16 @@ const NoteState = (props) => {
   //delete a note
 
   //pin a note
+
   //unpin a note
 
   // edit a note
-  const editNote = async (id) => {
-    setProgress(90);
-    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "PUT", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        title: noteedit.etitle,
-        description: noteedit.edescription,
-        tag: noteedit.etag,
-      }),
-    });
-    const json = await response.json();
 
-    let newNotes = JSON.parse(JSON.stringify(notes));
-    // Logic to edit in client
-    for (let index = 0; index < newNotes.length; index++) {
-      const element = newNotes[index];
-      if (element._id === id) {
-        newNotes[index].title = noteedit.etitle;
-        newNotes[index].description = noteedit.edescription;
-        newNotes[index].tag = noteedit.etag;
-        break;
-      }
-    }
-    for (let index = 0; index < filterednotes.length; index++) {
-      const element = filterednotes[index];
-      if (element._id === id) {
-        element.title = noteedit.etitle;
-        element.description = noteedit.edescription;
-        element.tag = noteedit.etag;
-        break;
-      }
-    }
-
-    setNotes(newNotes);
-    setProgress(100);
-    toast.success("Note Updated");
-  };
   return (
     <NoteContext.Provider
       value={{
         notes,
         setNotes,
-        editNote,
         showpopup,
         setpopup,
         note,
