@@ -19,7 +19,20 @@ const Navbar = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
+      <nav className="navbar navbar-expand-lg  bg-light shadow fixed-top">
         <div className="container-fluid">
+          <Link className="navbar-brand" to="/">
+            My Notebook
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
           <Link className="navbar-brand" to="/">
             My Notebook
           </Link>
@@ -35,15 +48,16 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === "/" ? "active" : ""
+                    location.pathname === "/home" ? "active" : ""
                   }`}
                   aria-current="page"
                   to="/"
-                  hidden
                 >
                   Home
                 </Link>
@@ -51,10 +65,9 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === "/about" ? "active" : ""
+                    location.pathname === "/About" ? "active" : ""
                   }`}
                   to="/About"
-                  hidden
                 >
                   About
                 </Link>
@@ -72,7 +85,7 @@ const Navbar = () => {
             ) : (
               <div className="d-flex align-items-center">
                 {" "}
-                <p style={{ color: "black", margin: 0 }}>{user}</p>
+                <p style={{ color: "black", margin: 0 }}>{userData.email}</p>
                 <button
                   className="btn btn-secondary mx-2"
                   onClick={handleLogout}
@@ -84,8 +97,12 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      </nav>
     </div>
   );
 };
+  );
+};
 
+export default Navbar;
 export default Navbar;
