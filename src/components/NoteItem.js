@@ -1,18 +1,13 @@
-import React, { Suspense, lazy, useContext, useState } from "react";
-import noteContext from "../context/notes/noteContext";
+import React, { Suspense, lazy, useState } from "react";
 import Spinner from "./Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteNote, pinNotes,unpinNotes, setDeleteNoteId } from "../features/notes/notesSlice";
+
 const NoteData = lazy(() => import("./NoteData"));
 
 const NoteItem = (props) => {
-  const context = useContext(noteContext);
-  const {
-    deleteNote,
-    deleteId,
-    setDeleteId,
-    setProgress,
-    pinNotes,
-    unpinNotes,
-  } = context;
+  const dispatch = useDispatch();
+  const deleteId = useSelector((state) => state.notes.deleteNoteId);
   const [pinned] = useState(props.note.pinned);
   const [showNotes, setShowNotes] = useState(false);
   const { note, editNote } = props;
@@ -20,7 +15,7 @@ const NoteItem = (props) => {
     e.preventDefault();
     document.querySelector(".popup").style.display = "block";
     document.querySelector(".blurbackground").style.display = "block";
-    setDeleteId(id);
+    dispatch(setDeleteNoteId(id));
   };
   const closepopup = () => {
     document.querySelector(".popup").style.display = "none";
@@ -29,20 +24,16 @@ const NoteItem = (props) => {
   const handleYes = async (e) => {
     document.querySelector(".popup").style.display = "none";
     document.querySelector(".blurbackground").style.display = "none";
-    setProgress(70);
-    await deleteNote(deleteId);
-    setProgress(100);
+    dispatch(deleteNote(deleteId));
   };
   const handleClick = () => {
     setShowNotes(true);
   };
   const handlepinned = async () => {
-    await pinNotes(props.note._id);
-    setProgress(100);
+    dispatch(pinNotes(props.note._id));
   };
   const handleunpinned = async () => {
-    await unpinNotes(props.note._id);
-    setProgress(100);
+    dispatch(unpinNotes(props.note._id));
   };
   const date = new Date(note.date);
   const months = [
@@ -105,7 +96,6 @@ const NoteItem = (props) => {
                   className="fa-sharp fa-solid fa-file-pen ms-2"
                   onClick={() => editNote(note._id)}
                 ></i>
-                {/* <i className="fa-solid fa-expand" onClick={handleClick}></i> */}
               </div>
             </div>
             <p

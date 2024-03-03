@@ -1,16 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import noteContext from "../context/notes/noteContext";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setProgress } from "../features/notes/notesSlice";
 
 const Signup = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const context = useContext(noteContext);
-  const { setProgress } = context;
   const [type, setType] = useState("password");
   const handlePass = (e) => {
     if (type === "password") {
@@ -73,7 +73,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setProgress(90);
+    dispatch(setProgress(80));
     const response = await fetch(
       `https://mynotebookbackend-0n7e.onrender.com/api/auth/createUser`,
       {
@@ -91,8 +91,6 @@ const Signup = () => {
       }
     );
     const json = await response.json();
-    console.log(json);
-    setProgress(100);
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       navigate("/");
@@ -100,6 +98,7 @@ const Signup = () => {
     } else {
       setError(json.error);
     }
+     dispatch(setProgress(100));
   };
   return (
     <div className="signup">

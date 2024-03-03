@@ -1,25 +1,25 @@
-import React, { useContext} from "react";
-import noteContext from "../context/notes/noteContext";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editNote } from "../features/notes/notesSlice";
 
-const EditNote = () => {
-    const context = useContext(noteContext);
-    const {setpopup,editNote,setEditNote,noteedit,editNoteid,setProgress} = context;
+const EditNote = ({setShowEditNote}) => {
+  const dispatch = useDispatch();
+  const noteToBeEdited = useSelector((state) => state.notes.noteToBeEdited);
+  const [NoteData, setNoteData] = useState(noteToBeEdited);
 
-    const closepopup =()=>{
-        setpopup(false);
-    }
+  const closepopup = () => {
+    setShowEditNote(false);
+  };
 
-    const handleChange=(e)=>{
-        setEditNote({...noteedit,[e.target.name]:e.target.value})
-    }
+  const handleChange = (e) => {
+    setNoteData({ ...NoteData, [e.target.name]: e.target.value });
+  };
 
-    const handleClick =async(e)=>{
-        e.preventDefault();
-        setProgress(70);
-        await editNote(editNoteid);
-        setpopup(false);
-        setProgress(100);
-    }
+  const handleClick = async (e) => {
+    e.preventDefault();
+    dispatch(editNote(NoteData));
+    setShowEditNote(false);
+  };
   return (
     <div>
       <div className="blurbackground" onClick={closepopup}></div>
@@ -37,9 +37,9 @@ const EditNote = () => {
             <input
               type="text"
               className="form-control"
-              id="etitle"
-              name="etitle"
-              value={noteedit.etitle}
+              id="title"
+              name="title"
+              value={NoteData.title}
               onChange={handleChange}
               autoComplete="off"
             />
@@ -51,9 +51,9 @@ const EditNote = () => {
             <textarea
               type="text"
               className="form-control"
-              id="edescription"
-              name="edescription"
-              value={noteedit.edescription}
+              id="description"
+              name="description"
+              value={NoteData.description}
               onChange={handleChange}
               autoComplete="off"
               rows={5}
@@ -66,16 +66,16 @@ const EditNote = () => {
             <input
               type="text"
               className="form-control"
-              id="etag"
-              name="etag"
-              value={noteedit.etag}
+              id="tag"
+              name="tag"
+              value={NoteData.tag}
               onChange={handleChange}
               autoComplete="off"
             />
           </div>
           <button
             disabled={
-              noteedit.etitle.length < 5 || noteedit.edescription.length < 5
+              NoteData.title.length < 5 || NoteData.description.length < 5
             }
             type="submit"
             onClick={handleClick}

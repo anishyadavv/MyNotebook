@@ -1,24 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
-import AutoLinkText from "./Autolink";
-import noteContext from "../context/notes/noteContext";
+import React, { useEffect, useState } from "react";
+import { editNote } from "../features/notes/notesSlice";
+import { useDispatch } from "react-redux";
 
 const NoteData = (note) => {
-  const context = useContext(noteContext);
-  const { editNote, setEditNote, noteedit} = context;
+  const dispatch = useDispatch();
+  const [NoteData, setNoteData] = useState({
+    id: "",
+    title: "",
+    description: "",
+    tag: "",
+  });
+
   const closepopup = async () => {
     note.setShowNotes(false);
-
     if (
-      note.title !== noteedit.etitle ||
-      note.tag !== noteedit.etag ||
-      note.description !== noteedit.edescription
+      note.title !== NoteData.title ||
+      note.tag !== NoteData.tag ||
+      note.description !== NoteData.description
     ) {
-      await editNote(note.id);
+      dispatch(editNote(NoteData));
     }
   };
+
   const handleChange = (e) => {
-    setEditNote({ ...noteedit, [e.target.name]: e.target.value });
+    setNoteData({ ...NoteData, [e.target.name]: e.target.value });
   };
+
   const date = new Date(note.date);
   const months = [
     "January",
@@ -34,15 +41,18 @@ const NoteData = (note) => {
     "November",
     "December",
   ];
+
   let month = months[date.getMonth()];
 
   useEffect(() => {
-    setEditNote({
-      etitle: note.title,
-      edescription: note.description,
-      etag: note.tag,
+    setNoteData({
+      id: note.id,
+      title: note.title,
+      description: note.description,
+      tag: note.tag,
     });
   }, []);
+
   return (
     <>
       <div className="blurbackground" onClick={closepopup}></div>
@@ -55,19 +65,20 @@ const NoteData = (note) => {
           <input
             className="note-data-title"
             type="text"
-            name="etitle"
-            value={noteedit.etitle}
+            name="title"
+            value={NoteData.title}
             onChange={handleChange}
             style={{ fontWeight: 500 }}
             placeholder="Title"
+            autoFocus
           />
         </h1>
         <textarea
           className="noteDescription"
           placeholder="Description"
           id="description"
-          name="edescription"
-          value={noteedit.edescription}
+          name="description"
+          value={NoteData.description}
           onChange={handleChange}
         />
         {/* <div className="links">
@@ -78,8 +89,8 @@ const NoteData = (note) => {
           <input
             type="text"
             className="note-data-tag"
-            name="etag"
-            value={noteedit.etag}
+            name="tag"
+            value={NoteData.tag}
             onChange={handleChange}
             style={{ fontWeight: 700 }}
             placeholder="Tag"

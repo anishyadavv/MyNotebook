@@ -1,45 +1,42 @@
-import React, { Suspense, lazy, useContext, useEffect, useState } from "react";
-import noteContext from "../context/notes/noteContext";
+import React, { Suspense, lazy,useEffect, useState } from "react";
 import NoteItem from "./NoteItem";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotes } from "../features/notes/notesSlice";
+import { getUserData } from "../features/user/userSlice";
+import { setNoteToBeEdited } from "../features/notes/notesSlice";
+import { setFilteredNotes } from "../features/notes/notesSlice";
 const EditNote = lazy(() => import("./EditNote"));
 const AddNote = lazy(() => import("./AddNote"));
+
 const Notes = () => {
   const navigate = useNavigate();
-  const context = useContext(noteContext);
-  const {
-    notes,
-    getNotes,
-    showpopup,
-    setpopup,
-    setEditNote,
-    setEditNoteid,
-    getUserData,
-    showAddnote,
-    setAddnote,
-    filterednotes,
-    setFilterednotes,
-  } = context;
+  const dispatch = useDispatch();
+  const notes = useSelector((state) => state.notes.notes);
+  const filterednotes = useSelector((state) => state.notes.filteredNotes);
+  const [showAddNote, setShowAddNote] = useState(false);
+  const [showEditNote, setShowEditNote] = useState(false);
 
   const pinnedNotes = notes.filter((note) => {
     return note.pinned === true;
-  })
-  const unpinnedNotes = notes.filter((note) =>{
+  });
+  const unpinnedNotes = notes.filter((note) => {
     return note.pinned !== true;
   });
   const [search, setSearch] = useState("");
   const editNote = (id, currentNote) => {
-    setpopup(true);
-    setEditNoteid(id);
-    setEditNote({
-      etitle: currentNote.title,
-      edescription: currentNote.description,
-      etag: currentNote.tag,
-    });
+    setShowEditNote(true);
+    const editNoteData = {
+      id,
+      title: currentNote.title,
+      description: currentNote.description,
+      tag: currentNote.tag,
+    };
+    dispatch(setNoteToBeEdited(editNoteData));
   };
   const handleAddnote = () => {
-    setAddnote(true);
+    setShowAddNote(true);
   };
   const handleSearch = (e) => {
     let searchValue = e.target.value.toLowerCase();
@@ -53,21 +50,20 @@ const Notes = () => {
         tag.includes(searchValue)
       );
     });
-    setFilterednotes(newNotes);
+    dispatch(setFilteredNotes(newNotes));
     setSearch(searchValue);
   };
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      getNotes();
-      getUserData();
+      dispatch(getNotes());
+      dispatch(getUserData());
     } else {
       navigate("/login");
     }
     //eslint-disable-next-line
-  },[]);
+  }, []);
   return (
     <div className="notes">
-      {/* <Alert message="hello" showAlert="hello" /> */}
       <div className="container d-md-flex justify-content-between align-items-center mb-4">
         <button className="btn btn-dark mt-4" onClick={handleAddnote}>
           Add Note
@@ -89,22 +85,30 @@ const Notes = () => {
           />
         </div>
       </div>
-      <Suspense fallback={<Spinner />}>{showAddnote && <AddNote />}</Suspense>
-      <Suspense fallback={<Spinner />}>{showpopup && <EditNote />}</Suspense>
+      <Suspense fallback={<Spinner />}>
+        {showAddNote && <AddNote setShowAddNote={setShowAddNote} />}
+      </Suspense>
+      <Suspense fallback={<Spinner />}>
+        {showEditNote && <EditNote setShowEditNote={setShowEditNote} />}
+      </Suspense>
 
       <div className="container">
         <div className="row my-3">
           <h2 className="mb-4">Your Notes</h2>
           {/* pinned notes  */}
-          {(pinnedNotes && search.length===0) && pinnedNotes.map((e)=>{
-            return (
-              <NoteItem
-                key={e._id}
-                editNote={() => editNote(e._id, e)}
-                note={e}
-              />
-            )
-          }).reverse()}
+          {pinnedNotes &&
+            search.length === 0 &&
+            pinnedNotes
+              .map((e) => {
+                return (
+                  <NoteItem
+                    key={e._id}
+                    editNote={() => editNote(e._id, e)}
+                    note={e}
+                  />
+                );
+              })
+              .reverse()}
           {/* pinned notes and filtered */}
           {notes.length !== 0 ? (
             search.length === 0 ? (
@@ -117,7 +121,8 @@ const Notes = () => {
                       note={e}
                     />
                   );
-                }).reverse()
+                })
+                .reverse()
             ) : filterednotes.length === 0 ? (
               <h1 className="text-center">Note Not Found!</h1>
             ) : (
@@ -130,7 +135,8 @@ const Notes = () => {
                       note={e}
                     />
                   );
-                }).reverse()
+                })
+                .reverse()
             )
           ) : (
             <h1 className="text-center">No Notes To Display</h1>
