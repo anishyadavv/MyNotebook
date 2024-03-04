@@ -199,6 +199,12 @@ export const notesSlice = createSlice({
 
         state.notes.length = 0;
         state.notes = [...newNotes];
+
+        const filterNotes = state.filteredNotes.filter((note) => {
+          return note._id !== id;
+        });
+        state.filteredNotes.length=0;
+        state.filteredNotes = [...filterNotes];
         toast.success("Note Deleted");
       })
       .addCase(deleteNote.rejected, (state, action) => {
@@ -217,9 +223,6 @@ export const notesSlice = createSlice({
         });
         state.notes.length = 0;
         state.notes = [...newNotes];
-      })
-      .addCase(pinNotes.fulfilled, () => {
-        toast.success("Note pinned");
       })
       .addCase(pinNotes.rejected, (state, action) => {
         const id = action.meta.arg;
@@ -245,9 +248,6 @@ export const notesSlice = createSlice({
         });
         state.notes.length = 0;
         state.notes = [...newNotes];
-      })
-      .addCase(unpinNotes.fulfilled, () => {
-        toast.success("Note unpinned");
       })
       .addCase(unpinNotes.rejected, (state, action) => {
         const id = action.meta.arg;

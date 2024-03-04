@@ -81,9 +81,6 @@ const NoteData = (note) => {
           value={NoteData.description}
           onChange={handleChange}
         />
-        {/* <div className="links">
-          <AutoLinkText text={note.description} />
-        </div> */}
 
         <div className="notedata d-flex align-content-center justify-content-between">
           <input
