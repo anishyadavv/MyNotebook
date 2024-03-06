@@ -6,14 +6,14 @@ const host = "https://mynotebookbackend-0n7e.onrender.com";
 const initialState = {
   progress: 0,
   notes: [],
-  filteredNotes:[],
+  filteredNotes: [],
   noteToBeEdited: {
     id: "",
     title: "",
     description: "",
     tag: "",
   },
-  deleteNoteId:"",
+  deleteNoteId: "",
 };
 
 //get all notes for a user
@@ -149,13 +149,13 @@ export const notesSlice = createSlice({
     },
     setFilteredNotes: (state, action) => {
       state.filteredNotes = action.payload;
-    }
-    ,setProgress:(state,action)=>{
+    },
+    setProgress: (state, action) => {
       state.progress = action.payload;
-    }
-    ,setDeleteNoteId: (state,action)=>{
+    },
+    setDeleteNoteId: (state, action) => {
       state.deleteNoteId = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -203,7 +203,7 @@ export const notesSlice = createSlice({
         const filterNotes = state.filteredNotes.filter((note) => {
           return note._id !== id;
         });
-        state.filteredNotes.length=0;
+        state.filteredNotes.length = 0;
         state.filteredNotes = [...filterNotes];
         toast.success("Note Deleted");
       })
@@ -214,6 +214,7 @@ export const notesSlice = createSlice({
 
     builder
       .addCase(pinNotes.pending, (state, action) => {
+        console.log("pinned");
         const id = action.meta.arg;
         const newNotes = state.notes.map((note) => {
           if (note._id === id) {
@@ -239,6 +240,7 @@ export const notesSlice = createSlice({
 
     builder
       .addCase(unpinNotes.pending, (state, action) => {
+        console.log("unpinned");
         const id = action.meta.arg;
         const newNotes = state.notes.map((note) => {
           if (note._id === id) {
@@ -279,14 +281,14 @@ export const notesSlice = createSlice({
         state.notes.length = 0;
         state.notes = [...newNotes];
 
-        const filterNotes = state.filteredNotes.map((note)=>{
+        const filterNotes = state.filteredNotes.map((note) => {
           if (note._id === id) {
             note.title = action.meta.arg.title;
             note.description = action.meta.arg.description;
             note.tag = action.meta.arg.tag;
           }
           return note;
-        })
+        });
         state.filteredNotes.length = 0;
         state.filteredNotes = [...filterNotes];
         toast.success("Note edited successfully");
@@ -299,6 +301,11 @@ export const notesSlice = createSlice({
   },
 });
 
-export const { setProgress,setNoteToBeEdited, setFilteredNotes, setDeleteNoteId } = notesSlice.actions;
+export const {
+  setProgress,
+  setNoteToBeEdited,
+  setFilteredNotes,
+  setDeleteNoteId,
+} = notesSlice.actions;
 
 export default notesSlice.reducer;
