@@ -61,7 +61,7 @@ const NoteData = (note) => {
           className="fa-solid fa-xmark fa-lg d-flex flex-row-reverse cross"
           onClick={closepopup}
         ></i>
-        <h1>
+        <h3>
           <input
             className="note-data-title"
             type="text"
@@ -72,7 +72,7 @@ const NoteData = (note) => {
             placeholder="Title"
             autoFocus
           />
-        </h1>
+        </h3>
         <textarea
           className="noteDescription"
           placeholder="Description"

@@ -153,6 +153,7 @@ body{
 .note-data-title{
   outline: none;
   border: none;
+  width: 90%;
 }
 body {
   margin: 0;
@@ -286,9 +287,6 @@ margin-top: 10vh;
   }
   .addnote{
       max-width: 350px;
-  }
-  .note-data-title{
-  max-width: 200px;
   }
   .notedata{
   display: flex;
