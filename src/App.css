@@ -287,4 +287,11 @@ margin-top: 10vh;
   .addnote{
       max-width: 350px;
   }
+  .note-data-title{
+  max-width: 200px;
+  }
+  .notedata{
+  display: flex;
+  flex-direction: column;
+  }
 }
