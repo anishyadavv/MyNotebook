@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
-const host1 = "https://mynotebookbackend-0n7e.onrender.com";
-const host = "http://localhost:5000";
+const host = "https://mynotebookbackend-0n7e.onrender.com";
 const initialState = {
   progress: 0,
   notes: [],
