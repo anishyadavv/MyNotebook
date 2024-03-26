@@ -26,6 +26,7 @@ const NoteData = (note) => {
     setNoteData({ ...NoteData, [e.target.name]: e.target.value });
   };
 
+  const updatedAt = new Date(note.updatedAt);
   const date = new Date(note.date);
   const months = [
     "January",
@@ -41,8 +42,6 @@ const NoteData = (note) => {
     "November",
     "December",
   ];
-
-  let month = months[date.getMonth()];
 
   useEffect(() => {
     setNoteData({
@@ -92,7 +91,15 @@ const NoteData = (note) => {
             style={{ fontWeight: 700 }}
             placeholder="Tag"
           />
-          <p className="notedata-date">{`${date.getDate()} ${month} ${date.getFullYear()}`}</p>
+          <p className="notedata-date">
+            {note.updatedAt
+              ? `Edited ${updatedAt.getDate()} ${
+                  months[updatedAt.getMonth()]
+                } ${updatedAt.getFullYear()} `
+              : `${date.getDate()} ${
+                  months[date.getMonth()]
+                } ${date.getFullYear()}`}
+          </p>
         </div>
       </div>
     </>

@@ -30,10 +30,10 @@ const NoteItem = (props) => {
     setShowNotes(true);
   };
   const handlepinned = async () => {
-    dispatch(pinNotes(props.note._id));
+    dispatch(pinNotes(note._id));
   };
   const handleunpinned = async () => {
-    dispatch(unpinNotes(props.note._id));
+    dispatch(unpinNotes(note._id));
   };
   const date = new Date(note.date);
   const months = [
@@ -62,6 +62,7 @@ const NoteItem = (props) => {
             date={date}
             id={note._id}
             setShowNotes={setShowNotes}
+            updatedAt={note.updatedAt}
           />
         )}
       </Suspense>
