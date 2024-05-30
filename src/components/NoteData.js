@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { editNote } from "../features/notes/notesSlice";
 import { useDispatch } from "react-redux";
+import NoteDataDescription from "./NoteDataDescription";
 
 const NoteData = (note) => {
   const dispatch = useDispatch();
@@ -72,14 +73,18 @@ const NoteData = (note) => {
             autoFocus
           />
         </h3>
-        <textarea
+        {/* <textarea
           className="noteDescription"
           placeholder="Description"
           id="description"
           name="description"
           value={NoteData.description}
           onChange={handleChange}
-        />
+        /> */}
+        <NoteDataDescription
+          description={NoteData.description}
+          onChange={handleChange}
+        ></NoteDataDescription>
 
         <div className="notedata d-flex align-content-center justify-content-between">
           <input
