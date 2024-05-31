@@ -28,7 +28,7 @@ const AutoLink = ({ text }) => {
         if (match) {
           const url = match[0];
           return (
-            <div>
+            <div key={url}>
               <a
                 href={url.startsWith("http") ? url : `http://${url}`}
                 target="_blank"
