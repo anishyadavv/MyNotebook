@@ -1,4 +1,4 @@
-import React from "react";
+import AutoLinkText from "./AutoLink";
 
 const NoteDataDescription = ({ description, onChange }) => {
   return (
@@ -12,6 +12,8 @@ const NoteDataDescription = ({ description, onChange }) => {
         onChange={onChange}
       />
       Links:
+      <AutoLinkText
+        text={description}/>
     </div>
   );
 };
