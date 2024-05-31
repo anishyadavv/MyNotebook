@@ -221,7 +221,22 @@ i {
   position: absolute;
   bottom: -7px;
   left: 15px;
+  width: 150px;
+  overflow:hidden;
 }
+.youtube-thumbnail{
+  background-color: #d4d4d4;
+  padding: 10px;
+  border-radius: 7px;
+}
+.youtube-thumbnail:hover{
+  background-color: #c2c0c0;
+}
+.youtube-thumbnail>img{
+  width: 20vw;
+  object-fit: cover;
+}
+
 .card-text{
   height: 100px;
   overflow: hidden;
@@ -292,4 +307,8 @@ margin-top: 10vh;
   display: flex;
   flex-direction: column;
   }
+  .youtube-thumbnail>img{
+  width: 100%;
+  object-fit: cover;
+}
 }

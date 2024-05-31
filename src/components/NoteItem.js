@@ -109,7 +109,7 @@ const NoteItem = (props) => {
                 : note.description}
             </p>
             <p className="card-tag">
-              <b>{note.tag}</b>
+              <b>{note.tag.slice(0,18)}</b>
             </p>
             <p className="time">{`${date.getDate()} ${month.slice(
               0,

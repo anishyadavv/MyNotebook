@@ -11,9 +11,8 @@ const NoteDataDescription = ({ description, onChange }) => {
         value={description}
         onChange={onChange}
       />
-      Links:
-      <AutoLinkText
-        text={description}/>
+      <h4>Links Extracted:</h4>
+      <AutoLinkText text={description} />
     </div>
   );
 };

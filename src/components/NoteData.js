@@ -84,7 +84,7 @@ const NoteData = (note) => {
         <NoteDataDescription
           description={NoteData.description}
           onChange={handleChange}
-        ></NoteDataDescription>
+        />
 
         <div className="notedata d-flex align-content-center justify-content-between">
           <input

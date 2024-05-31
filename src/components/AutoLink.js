@@ -1,3 +1,5 @@
+import YoutubeThumbnail from "./YoutubeThumbnail";
+
 const AutoLink = ({ text }) => {
   const delimiter =
     /((?:https?:\/\/)?(?:(?:[a-z0-9]?(?:[a-z0-9\-]{1,61}[a-z0-9])?\.[^\.|\s])+[a-z\.]*[a-z]+|(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})(?::\d{1,5})*[a-z0-9.,_\/~#&=;%+?\-\\(\\)]*)/gi;
@@ -33,13 +35,10 @@ const AutoLink = ({ text }) => {
                 rel="noreferrer"
               >
                 {isYoutubeVideo(url) ? (
-                  <img
-                    style={{ width: "30vw", marginBottom: "10px" }}
-                    src={`https://img.youtube.com/vi/${getvideoId(url)}/0.jpg`}
-                    alt="thumbnail"
-                  />
+                  <YoutubeThumbnail videoId={getvideoId(url)} />
                 ) : (
-                  url
+                  <p
+                  style={{overflow: "hidden"}}>{url}</p>
                 )}
                 <br />
               </a>
