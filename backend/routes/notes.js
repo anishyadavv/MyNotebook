@@ -1,5 +1,4 @@
 const express = require("express");
-const { find } = require("../models/user");
 const fetchuser = require("../middleware/fecthuser");
 const Notes = require("../models/notes");
 const router = express.Router();
